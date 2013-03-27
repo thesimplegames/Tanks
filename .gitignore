@@ -1,0 +1,14 @@
+/Library
+*.csproj
+*.sln
+*.pidb
+*.userprefs
+/Temp
+*.unityproj
+/game_Data
+/Build
+/_ReSharper.DrunkenMaster-csharp
+/obj
+*.user
+*.suo
+*.idc
