@@ -24,6 +24,10 @@ public class LevelCreator : MonoBehaviour {
 	GameObject eagle;
 	GameObject bush;
 	GameObject nothing;
+	GameObject player1;
+	GameObject player2;
+	GameObject tank;
+	GameObject tankObject;
 	
 	// Use this for initialization
 	void Start () {
@@ -34,6 +38,7 @@ public class LevelCreator : MonoBehaviour {
 		water = Resources.Load("Prefabs/Water") as GameObject;
 		eagle = Resources.Load("Prefabs/Eagle") as GameObject;
 		nothing = Resources.Load("Prefabs/Nothing") as GameObject;
+		tank = Resources.Load("Prefabs/Tank") as GameObject;
 		
 		for (int i = 0; i < hor; i++)
 			for (int j = 0; j < ver; j++) {
@@ -54,6 +59,18 @@ public class LevelCreator : MonoBehaviour {
 					case 4: 
 						Instantiate(nothing, new Vector2(i, j), nothing.transform.rotation);
 						Instantiate(eagle, new Vector2(i, j), eagle.transform.rotation);
+						break;
+					case 5: 
+						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
+						tankObject.GetComponent<TTank>().type = 0;
+						break;
+					case 6: 
+						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
+						tankObject.GetComponent<TTank>().type = 1;
+						break;
+					case 7: 
+						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
+						tankObject.GetComponent<TTank>().type = 2;
 						break;
 					case 8: 
 						Instantiate(megaWall, new Vector2(i, j), megaWall.transform.rotation);
