@@ -21,8 +21,22 @@ public class TBullet : MonoBehaviour {
 		Ray ray = new Ray (transform.position, new Vector3(direction.x,direction.y,transform.position.z));
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 0.1f)){
-			Destroy(hit.transform.gameObject);
-			Destroy(this.gameObject);
+			switch (hit.transform.gameObject.tag){
+			case "MegaWall": 
+				Destroy(this.gameObject);
+				break;
+			case "Water": 
+				break;
+			case "Bush": 
+				break;	
+			case "Tank":
+				hit.transform.gameObject.GetComponent<TTank>().life--;
+				break;		
+			default:			
+				Destroy(hit.transform.gameObject);
+				Destroy(this.gameObject);
+				break;
+			}
 		}
 		
 	}
