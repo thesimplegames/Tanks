@@ -12,7 +12,6 @@ public class TTank : MonoBehaviour {
 	public int type;
 	GameObject bullet;
 	private Vector3 targetPosition;
-	private Vector3 beforePosition;
 	
 	// Use this for initialization
 	void Start () {
@@ -42,7 +41,6 @@ public class TTank : MonoBehaviour {
 					direction = new Vector2 (0,1);
 					isMoving=true;
 					targetPosition=new Vector3 (transform.position.x+direction.x,transform.position.y+direction.y,transform.position.z);
-					beforePosition=transform.position;
 					Ray ray = new Ray (transform.position, new Vector3(direction.x,direction.y,transform.position.z));
 					RaycastHit hit;
 					if (Physics.Raycast(ray, out hit, 1)){
@@ -53,7 +51,6 @@ public class TTank : MonoBehaviour {
 					direction = new Vector2 (-1,0);
 					isMoving=true;
 					targetPosition=new Vector3 (transform.position.x+direction.x,transform.position.y+direction.y,transform.position.z);
-					beforePosition=transform.position;
 					Ray ray = new Ray (transform.position, new Vector3(direction.x,direction.y,transform.position.z));
 					RaycastHit hit;
 					if (Physics.Raycast(ray, out hit, 1)){
@@ -64,7 +61,6 @@ public class TTank : MonoBehaviour {
 					direction = new Vector2 (1,0);
 					isMoving=true;
 					targetPosition=new Vector3 (transform.position.x+direction.x,transform.position.y+direction.y,transform.position.z);
-					beforePosition=transform.position;
 					Ray ray = new Ray (transform.position, new Vector3(direction.x,direction.y,transform.position.z));
 					RaycastHit hit;
 					if (Physics.Raycast(ray, out hit, 1)){
@@ -75,7 +71,6 @@ public class TTank : MonoBehaviour {
 					direction = new Vector2 (0,-1);
 					isMoving=true;
 					targetPosition=new Vector3 (transform.position.x+direction.x,transform.position.y+direction.y,transform.position.z);
-					beforePosition=transform.position;
 					Ray ray = new Ray (transform.position, new Vector3(direction.x,direction.y,transform.position.z));
 					RaycastHit hit;
 					if (Physics.Raycast(ray, out hit, 1)){
@@ -97,7 +92,6 @@ public class TTank : MonoBehaviour {
 					direction = new Vector2 (0,1);
 					isMoving=true;
 					targetPosition=new Vector3 (transform.position.x+direction.x,transform.position.y+direction.y,transform.position.z);
-					beforePosition=transform.position;
 					Ray ray = new Ray (transform.position, new Vector3(direction.x,direction.y,transform.position.z));
 					RaycastHit hit;
 					if (Physics.Raycast(ray, out hit, 1)){
@@ -108,7 +102,6 @@ public class TTank : MonoBehaviour {
 					direction = new Vector2 (-1,0);
 					isMoving=true;
 					targetPosition=new Vector3 (transform.position.x+direction.x,transform.position.y+direction.y,transform.position.z);
-					beforePosition=transform.position;
 					Ray ray = new Ray (transform.position, new Vector3(direction.x,direction.y,transform.position.z));
 					RaycastHit hit;
 					if (Physics.Raycast(ray, out hit, 1)){
@@ -119,7 +112,6 @@ public class TTank : MonoBehaviour {
 					direction = new Vector2 (1,0);
 					isMoving=true;
 					targetPosition=new Vector3 (transform.position.x+direction.x,transform.position.y+direction.y,transform.position.z);
-					beforePosition=transform.position;
 					Ray ray = new Ray (transform.position, new Vector3(direction.x,direction.y,transform.position.z));
 					RaycastHit hit;
 					if (Physics.Raycast(ray, out hit, 1)){
@@ -130,7 +122,6 @@ public class TTank : MonoBehaviour {
 					direction = new Vector2 (0,-1);
 					isMoving=true;
 					targetPosition=new Vector3 (transform.position.x+direction.x,transform.position.y+direction.y,transform.position.z);
-					beforePosition=transform.position;
 					Ray ray = new Ray (transform.position, new Vector3(direction.x,direction.y,transform.position.z));
 					RaycastHit hit;
 					if (Physics.Raycast(ray, out hit, 1)){
