@@ -7,7 +7,7 @@ public class TTank : MonoBehaviour {
 	public float speedMod;
 	public float shield;
 	public int life;
-	bool isMoving;
+	private bool isMoving;
 	Vector2 direction;
 	public int type;
 	GameObject bullet;
@@ -22,7 +22,6 @@ public class TTank : MonoBehaviour {
 		life = 1;
 		isMoving = false;
 		direction = new Vector2 (1,0);
-		type=1;
 	}
 	
 	// Update is called once per frame
@@ -137,6 +136,9 @@ public class TTank : MonoBehaviour {
 						isMoving=false;
 					}
 				}	
+			}
+			
+			if (type == 0) {
 			}
 		}
 	}
