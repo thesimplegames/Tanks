@@ -58,7 +58,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 			
-			//endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
+			endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
 			if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), out hit, 1.2f)) 
 				right = false;
 			else right = true;
