@@ -8,6 +8,13 @@ public class Handler : MonoBehaviour {
 	private bool isMoving;
 	private Vector3 targetPosition;
 	private GameObject bullet;
+	private KeyCode[] handleParams;// = new KeyCode[4];
+	
+	
+	public void SetKeyCodes(KeyCode[] params_){
+		handleParams=params_;
+	}
+	
 	// Use this for initialization
 	void Start () {
 		tank=this.gameObject.GetComponent<TTank>();
@@ -16,49 +23,29 @@ public class Handler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKeyDown(handleParams[4])){
+			tank.Shoot();
+		}
 		if (!tank.isMoving){
 			if (tank.type == 1){ //First player
-				if (Input.GetKey(KeyCode.W)) {
+				if (Input.GetKey(handleParams[0])) {
 					direction = new Vector2 (0,1);
 					tank.Move (direction);
 				}
-				if (Input.GetKey(KeyCode.A)) {
+				if (Input.GetKey(handleParams[1])) {
 					direction = new Vector2 (-1,0);
 					tank.Move (direction);
 				}
-				if (Input.GetKey(KeyCode.D)) {
+				if (Input.GetKey(handleParams[3])) {
 					direction = new Vector2 (1,0);
 					tank.Move (direction);
 				}
-				if (Input.GetKey(KeyCode.S)) {
+				if (Input.GetKey(handleParams[2])) {
 					direction = new Vector2 (0,-1);
 					tank.Move (direction);
-				}
-				if (Input.GetKeyDown(KeyCode.Space)){
-					tank.Shoot();
 				}
 			}	
-			if (tank.type == 2){ //First player
-				if (Input.GetKey(KeyCode.UpArrow)) {
-					direction = new Vector2 (0,1);
-					tank.Move (direction);
-				}
-				if (Input.GetKey(KeyCode.LeftArrow)) {
-					direction = new Vector2 (-1,0);
-					tank.Move (direction);
-				}
-				if (Input.GetKey(KeyCode.RightArrow)) {
-					direction = new Vector2 (1,0);
-					tank.Move (direction);
-				}
-				if (Input.GetKey(KeyCode.DownArrow)) {
-					direction = new Vector2 (0,-1);
-					tank.Move (direction);
-				}	
-				if (Input.GetKeyDown(KeyCode.F)){
-					tank.Shoot();
-				}	
-			}
+			
 		}	
 	}
 }
