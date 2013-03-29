@@ -58,6 +58,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 			
+			Debug.Log("enemybeh1");
 			endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
 			if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), out hit, 1.2f)) 
 				right = false;
@@ -73,6 +74,8 @@ public class EnemyBehaviour : MonoBehaviour {
 			else down = true;
 		if (!tank.isMoving) {
 			
+			
+			Debug.Log("1");
 			count = 0;
 			
 			
@@ -120,10 +123,11 @@ public class EnemyBehaviour : MonoBehaviour {
 				if (downd <= upd && downd <= leftd && downd <= rightd)
 					falseDirection = new Vector2 (0, 1);
 				direction = -falseDirection;
-			}
+			
+		
+				}
 			
 			tank.Move(direction);
-			Debug.Log(direction);
 		}
 			
 	}

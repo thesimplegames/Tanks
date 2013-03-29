@@ -16,14 +16,16 @@ public class TTank : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		speed = 5;
+		speed = 3.5f;
 		speedMod = 0;
 		shield = 0;
 		life = 2;
 		isMoving = false;
 		direction = new Vector2 (1,0);
-		if (type == 0) 
+		if (type == 0) {
 			gameObject.GetComponent<EnemyBehaviour>().enabled = true;
+			gameObject.GetComponent<Handler>().enabled = false;
+		}
 	}
 	
 	public void Shooted(){
@@ -54,7 +56,6 @@ public class TTank : MonoBehaviour {
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 1)) {
 			isMoving = false;
-			Debug.Log (1);
 		}			
 	}
 	public void Shoot(){
@@ -72,6 +73,8 @@ public class TTank : MonoBehaviour {
 	void Update () {
 		if(life==0) Destroy(gameObject);
 		if (isMoving){
+			
+				Debug.Log(gameObject.tag+targetPosition.ToString()+transform.position.ToString());
 			transform.position=new Vector3 (transform.position.x+direction.x*speed*Time.deltaTime,
 											transform.position.y+direction.y*speed*Time.deltaTime,
 											transform.position.z);
