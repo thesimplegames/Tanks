@@ -10,7 +10,7 @@ public class TBullet : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		speed=10;
+		speed=5f;
 	//	speedMod=0;
 	}
 	
