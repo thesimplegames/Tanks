@@ -25,8 +25,27 @@ public class TTank : MonoBehaviour {
 			gameObject.GetComponent<EnemyBehaviour>().enabled = true;
 	}
 	
+	public void Shooted(){
+		if (shield>0) shield=0;
+			else {
+		life--;	
+		}
+	}	
+	
 	public void Move(Vector2 direction_){
 		direction = direction_;
+		if (direction==Vector2.up){
+		transform.eulerAngles = new Vector3 (180,270,90);
+		}
+		if (direction==(-Vector2.up)){
+		transform.eulerAngles = new Vector3 (0,270,90);
+		}
+		if (direction==(-Vector2.right)){
+		transform.eulerAngles = new Vector3 (270,270,90);
+		}
+		if (direction==Vector2.right){
+		transform.eulerAngles = new Vector3 (90,270,90);
+		}
 		isMoving = true;
 		targetPosition = new Vector3 (transform.position.x+direction.x,transform.position.y+direction.y,transform.position.z);
 		Ray ray = new Ray (transform.position, new Vector3(direction.x, direction.y, transform.position.z));
@@ -40,6 +59,7 @@ public class TTank : MonoBehaviour {
 			bullet = Instantiate(Resources.Load("Prefabs/Bullet")) as GameObject;
 			TBullet myBullet = bullet.GetComponent<TBullet>();
 			myBullet.direction = direction;
+			myBullet.parent=gameObject;
 			bullet.transform.position = transform.position;
 			bullet.transform.rotation = transform.rotation;
 		}			
@@ -47,6 +67,7 @@ public class TTank : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(life==0) Destroy(gameObject);
 		if (isMoving){
 			transform.position=new Vector3 (transform.position.x+direction.x*speed*Time.deltaTime,
 											transform.position.y+direction.y*speed*Time.deltaTime,
