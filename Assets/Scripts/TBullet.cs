@@ -15,7 +15,7 @@ public class TBullet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.position=new Vector3 (transform.position.x+direction.x*speed*Time.deltaTime,
+		transform.position = new Vector3 (transform.position.x+direction.x*speed*Time.deltaTime,
 										transform.position.y+direction.y*speed*Time.deltaTime,
 										transform.position.z);
 		Ray ray = new Ray (transform.position, new Vector3(direction.x,direction.y,transform.position.z));

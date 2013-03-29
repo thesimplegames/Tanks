@@ -55,6 +55,9 @@ public class Handler : MonoBehaviour {
 					direction = new Vector2 (0,-1);
 					tank.Move (direction);
 				}	
+				if (Input.GetKeyDown(KeyCode.F)){
+					tank.Shoot();
+				}	
 			}
 		}	
 	}

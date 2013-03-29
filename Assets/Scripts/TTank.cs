@@ -21,26 +21,27 @@ public class TTank : MonoBehaviour {
 		life = 1;
 		isMoving = false;
 		direction = new Vector2 (1,0);
-		type=1;
+		if (type == 0) 
+			gameObject.GetComponent<EnemyBehaviour>().enabled = true;
 	}
 	
 	public void Move(Vector2 direction_){
-		direction=direction_;
-		isMoving=true;
-		targetPosition=new Vector3 (transform.position.x+direction.x,transform.position.y+direction.y,transform.position.z);
-		Ray ray = new Ray (transform.position, new Vector3(direction.x,direction.y,transform.position.z));
+		direction = direction_;
+		isMoving = true;
+		targetPosition = new Vector3 (transform.position.x+direction.x,transform.position.y+direction.y,transform.position.z);
+		Ray ray = new Ray (transform.position, new Vector3(direction.x, direction.y, transform.position.z));
 		RaycastHit hit;
-		if (Physics.Raycast(ray, out hit, 1)){
-			isMoving=false;
+		if (Physics.Raycast(ray, out hit, 1)) {
+			isMoving = false;
 		}			
 	}
 	public void Shoot(){
-		if (bullet==null){
+		if (bullet == null){
 			bullet = Instantiate(Resources.Load("Prefabs/Bullet")) as GameObject;
-			TBullet myBullet=bullet.GetComponent<TBullet>();
-			myBullet.direction=direction;
-			bullet.transform.position=transform.position;
-			bullet.transform.rotation=transform.rotation;
+			TBullet myBullet = bullet.GetComponent<TBullet>();
+			myBullet.direction = direction;
+			bullet.transform.position = transform.position;
+			bullet.transform.rotation = transform.rotation;
 		}			
 	}
 	

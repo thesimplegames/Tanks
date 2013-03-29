@@ -3,64 +3,128 @@ using System.Collections;
 
 public class EnemyBehaviour : MonoBehaviour {
 	
-	int [,] marked = new int [10, 10];
-	Vector3 startObject;
 	Vector3 endObject;
-	
-	void Dijkstra (Vector3 start, Vector3 end) {
-	
-		int [,] graph = GameObject.FindGameObjectWithTag("LevelCreator").GetComponent<LevelCreator>().table;
-		for (int i = 0; i < 10; i++)
-			for (int j = 0; j < 10; j++)
-				marked[i, j] = 0;
-		
-		while (start != end) {
-			if (transform.position.x % 1 == 0 && transform.position.y % 1 == 0) {
-			
-				if (graph[(int)start.x + 1, (int)start.y] == 0 && marked[(int)start.x + 1, (int)start.y] == 0 && 
-					(end - new Vector3(start.x + 1, start.y, start.z)).magnitude <= (end - start).magnitude) {
-					marked[(int)start.x + 1, (int)start.y] = 1;
-					transform.position = new Vector3 (start.x + 1, start.y, start.z);
-				}
-				
-				if (graph[(int)start.x, (int)start.y + 1] == 0 && marked[(int)start.x, (int)start.y + 1] == 0 && 
-					(end - new Vector3(start.x, start.y + 1, start.z)).magnitude <= (end - start).magnitude) {
-					marked[(int)start.x + 1, (int)start.y + 1] = 1;
-					transform.position = new Vector3 (start.x, start.y + 1, start.z);
-				}
-				
-				if (graph[(int)start.x - 1, (int)start.y] == 0 && marked[(int)start.x - 1, (int)start.y] == 0 && 
-					(end - new Vector3(start.x - 1, start.y, start.z)).magnitude <= (end - start).magnitude) {
-					marked[(int)start.x - 1, (int)start.y] = 1;
-					transform.position = new Vector3 (start.x - 1, start.y, start.z);
-				}
-				
-				if (graph[(int)start.x, (int)start.y - 1] == 0 && marked[(int)start.x, (int)start.y - 1] == 0 && 
-					(end - new Vector3(start.x, start.y - 1, start.z)).magnitude <= (end - start).magnitude) {
-					marked[(int)start.x, (int)start.y - 1] = 1;
-					transform.position = new Vector3 (start.x, start.y - 1, start.z);
-				}
-				
-			}
-		}
-	}
+	private TTank tank;
+	RaycastHit hit;
+	Vector2 direction;
+	int count;
+	Vector2 falseDirection;
+	bool up, down, left, right;
+	float upd, downd, leftd, rightd;
 	
 	void Start () {
 		
-		startObject = transform.position;
+		tank = gameObject.GetComponent<TTank>();
+		tank.isMoving = false;
 		endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
-		Dijkstra(startObject, endObject);
+		if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), out hit, 1)) 
+			right = false;
+		else right = true;
+		if (Physics.Raycast(new Ray(transform.position, new Vector2(0, 1)), out hit, 1)) 
+			up = false;
+		else up = true;
+		if (Physics.Raycast(new Ray(transform.position, new Vector2(-1, 0)), out hit, 1)) 
+			left = false;
+		else left = true;
+		if (Physics.Raycast(new Ray(transform.position, new Vector2(0, -1)), out hit, 1)) 
+			down = false;
+		else down = true;
+		
+		if (right)
+			rightd = (endObject - new Vector3 (transform.position.x + 1, transform.position.y, transform.position.z)).magnitude;
+		else rightd = 100f;
+		if (up)
+			upd = (endObject - new Vector3 (transform.position.x, transform.position.y + 1, transform.position.z)).magnitude;
+		else upd = 100f;
+		if (left)
+			leftd = (endObject - new Vector3 (transform.position.x - 1, transform.position.y, transform.position.z)).magnitude;
+		else leftd = 100f;
+		if (down)
+			downd = (endObject - new Vector3 (transform.position.x, transform.position.y - 1, transform.position.z)).magnitude;
+		else downd = 100f;
+		
+		if (leftd <= upd && leftd <= downd && leftd <= rightd)
+			falseDirection = new Vector2 (1, 0);
+		if (rightd <= upd && rightd <= leftd && rightd <= downd)
+			falseDirection = new Vector2 (-1, 0);
+		if (upd <= leftd && upd <= downd && upd <= rightd)
+			falseDirection = new Vector2 (0, -1);
+		if (downd <= upd && downd <= leftd && downd <= rightd)
+			falseDirection = new Vector2 (0, 1);
 		
 	}
 	
 
 	// Update is called once per frame
 	void Update () {
-		
-		if (GameObject.FindGameObjectWithTag("Player1").transform.position != endObject) {
-			endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
-			Dijkstra(startObject, endObject);
+			
+			//endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
+			if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), out hit, 1.2f)) 
+				right = false;
+			else right = true;
+			if (Physics.Raycast(new Ray(transform.position, new Vector2(0, 1)), out hit, 1.2f)) 
+				up = false; 
+			else up = true;
+			if (Physics.Raycast(new Ray(transform.position, new Vector2(-1, 0)), out hit, 1.2f)) 
+				left = false; 
+			else left = true;
+			if (Physics.Raycast(new Ray(transform.position, new Vector2(0, -1)), out hit, 1.2f)) 
+				down = false;
+			else down = true;
+		if (!tank.isMoving) {
+			
+			count = 0;
+			
+			
+			if (right) count++;
+			if (left) count++;
+			if (down) count++;
+			if (up) count++;
+			
+			switch (count) {
+			case 1:
+				if (right) direction = new Vector2 (1, 0);
+				if (left) direction = new Vector2 (-1, 0);
+				if (up) direction = new Vector2 (0, 1);
+				if (down) direction = new Vector2 (0, -1);
+				falseDirection = -direction;
+				break;
+			case 2:
+				if (right && falseDirection != new Vector2 (1, 0)) direction = new Vector2 (1, 0);
+				if (left && falseDirection != new Vector2 (-1, 0)) direction = new Vector2 (-1, 0);
+				if (up && falseDirection != new Vector2 (0, 1)) direction = new Vector2 (0, 1);
+				if (down && falseDirection != new Vector2 (0, -1)) direction = new Vector2 (0, -1);
+				falseDirection = -direction;
+				break;
+			}
+			if (count > 2) {
+				if (right && falseDirection != new Vector2 (1, 0))
+					rightd = (endObject - new Vector3 (transform.position.x + 1, transform.position.y, transform.position.z)).magnitude;
+				else rightd = 100f;
+				if (up && falseDirection != new Vector2 (0, 1))
+					upd = (endObject - new Vector3 (transform.position.x, transform.position.y + 1, transform.position.z)).magnitude;
+				else upd = 100f;
+				if (left && falseDirection != new Vector2 (-1, 0))
+					leftd = (endObject - new Vector3 (transform.position.x - 1, transform.position.y, transform.position.z)).magnitude;
+				else leftd = 100f;
+				if (down && falseDirection != new Vector2 (0, -1))
+					downd = (endObject - new Vector3 (transform.position.x, transform.position.y - 1, transform.position.z)).magnitude;
+				else downd = 100f;
+				
+				if (leftd <= upd && leftd <= downd && leftd <= rightd)
+					falseDirection = new Vector2 (1, 0);
+				if (rightd <= upd && rightd <= leftd && rightd <= downd)
+					falseDirection = new Vector2 (-1, 0);
+				if (upd <= leftd && upd <= downd && upd <= rightd)
+					falseDirection = new Vector2 (0, -1);
+				if (downd <= upd && downd <= leftd && downd <= rightd)
+					falseDirection = new Vector2 (0, 1);
+				direction = -falseDirection;
+			}
+			
+			tank.Move(direction);
+			Debug.Log(direction);
 		}
-	
+			
 	}
 }
