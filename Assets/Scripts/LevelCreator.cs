@@ -69,16 +69,16 @@ public class LevelCreator : MonoBehaviour {
 						tankObject.GetComponent<TTank>().type = 1;
 						tankObject.GetComponent<Handler>().SetKeyCodes(Settings.Player1);
 						tankObject.transform.tag = "Player1";
-						
+						Debug.Log("Player 1 Ganerated at " + i.ToString() + "," + j.ToString() + "," + tank.transform.position.z.ToString());
 						break;
 					case 7: 
-						if (Settings.TwoPlayers){
+				//		if (Settings.TwoPlayers){
 							tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
 							tankObject.GetComponent<TTank>().type = 1;
 							tankObject.GetComponent<Handler>().SetKeyCodes(Settings.Player2);
 							tankObject.transform.tag = "Player2";
 							tankObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/SilverTank") as Texture;
-						}
+					//	}
 						break;
 					case 8: 
 						Instantiate(megaWall, new Vector2(i, j), megaWall.transform.rotation);

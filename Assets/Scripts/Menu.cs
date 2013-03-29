@@ -3,14 +3,19 @@ using System.Collections;
 
 public class Menu : MonoBehaviour {
 	
-	public GUIStyle TextStyle, ButtonStyle, TextNearFieldStyle, FieldStyle, BulletText, ControlsStyle, ButtonInputStyle;
-	
-	//int FontSize;
+	public GUIStyle TextStyle; 
+	public GUIStyle ButtonStyle;
+	public GUIStyle TextNearFieldStyle;
+	public GUIStyle FieldStyle;
+	public GUIStyle ControlsStyle; 
+	public GUIStyle ButtonInputStyle;
+	public GUIStyle PressAnyKey;
 	
 	bool MySettings = false;
 	bool GameSettings = false;
 	bool HandleSettings = false;
 	bool About=false;
+	bool StGame = false;
 	
 	Event Ev;
 	
@@ -53,30 +58,10 @@ public class Menu : MonoBehaviour {
 	int PlayerLife = 1;
 	int EnemyLife = 1;
 	int FlagLife = 1;
-//	public static float BulletSpeed = 10.0f;
 	
-	string PlayerLifeValue = "1";
-	string EnemyLifeValue = "1";
-	string FlagLifeValue = "1";
-	
-	string LastPlayerLifeValue = "1";
-	string LastEnemyLifeValue = "1";
-	string LastFlagLifeValue = "1";
-	
-	bool IsNumber (string Str) {
-		bool f = false;
-		if (Str == "1") f = true;
-		if (Str == "2") f = true;
-		if (Str == "3") f = true;
-		if (Str == "4") f = true;
-		if (Str == "5") f = true;
-		if (Str == "6") f = true;
-		if (Str == "7") f = true;
-		if (Str == "8") f = true;
-		if (Str == "9") f = true;
-		if (Str == "") f = true;
-		return f;
-	}
+	public int MaxPlayerLife = 9;
+	public int MaxEnemyLife = 9;
+	public int MaxFlagLife = 9;
 	
 	void StartGame() {
 		
@@ -101,45 +86,66 @@ public class Menu : MonoBehaviour {
 	
 	void OnGUI () {
 		
-		TextStyle.fontSize = Screen.height/20;
-		ButtonStyle.fontSize = Screen.height/50; 
-		TextNearFieldStyle.fontSize = Screen.height/50;
-		FieldStyle.fontSize = Screen.height/50;		
-		BulletText.fontSize = Screen.height/50;
+		TextStyle.fontSize = Screen.height/15;
+		ButtonStyle.fontSize = Screen.height/30; 
+		TextNearFieldStyle.fontSize = Screen.height/25;
+		FieldStyle.fontSize = Screen.height/25;		
 		ControlsStyle.fontSize = Screen.height/30;
+		PressAnyKey.fontSize = Screen.height/30;
 		
+		if ((!MySettings)&&(!About)&&(!StGame)) {
+			
+			      GUI.Box(new Rect(Screen.width/10*4, Screen.height/16*4, Screen.width/5, Screen.height/10), "Menu", TextStyle);
+			if(GUI.Button(new Rect(Screen.width/10*4, Screen.height/16*7, Screen.width/5, Screen.height/10), "Start game",ButtonStyle)) StGame = true;
+			if(GUI.Button(new Rect(Screen.width/10*4, Screen.height/16*9, Screen.width/5, Screen.height/10), "Options", ButtonStyle)) MySettings = true;
+			if(GUI.Button(new Rect(Screen.width/10*4, Screen.height/16*11,Screen.width/5, Screen.height/10), "About", ButtonStyle)) About = true;
+			if(GUI.Button(new Rect(Screen.width/10*4, Screen.height/16*13,Screen.width/5, Screen.height/10), "Exit", ButtonStyle)) Application.Quit();
 		
-		if ((!MySettings)&&(!About)) {
-			      GUI.Box(new Rect(Screen.width/16*7, Screen.height/16*4, Screen.width/8, Screen.height/16), "Menu", TextStyle);
-			if(GUI.Button(new Rect(Screen.width/16*7, Screen.height/16*7, Screen.width/8, Screen.height/16), "Start game",ButtonStyle)) StartGame();
-			if(GUI.Button(new Rect(Screen.width/16*7, Screen.height/16*9, Screen.width/8, Screen.height/16), "Options", ButtonStyle)) MySettings = true;
-			if(GUI.Button(new Rect(Screen.width/16*7, Screen.height/16*11,Screen.width/8, Screen.height/16), "About", ButtonStyle)) About = true;
-			if(GUI.Button(new Rect(Screen.width/16*7, Screen.height/16*13,Screen.width/8, Screen.height/16), "Exit", ButtonStyle)) Application.Quit();
+		}
+		
+		if (StGame) {
+			
+			GUI.Box (new Rect (Screen.width/16*7, Screen.height/2-Screen.height/4, Screen.width/8, Screen.height/16), "Start Game", TextStyle);
+			
+			if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*7,Screen.width/5,Screen.height/10),"1 Player",ButtonStyle)) {Settings.TwoPlayers = false; Application.LoadLevel("tanks");}	
+			if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*9,Screen.width/5,Screen.height/10),"2 Players", ButtonStyle)) {Settings.TwoPlayers = true; Application.LoadLevel("tanks");}
+		
+			if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*13,Screen.width/5,Screen.height/10),"Back", ButtonStyle)) StGame = false;
 		
 		}
 		
 		if ((MySettings)&&(GameSettings)) {
 			GUI.Box (new Rect (Screen.width/16*7, Screen.height/2-Screen.height/4, Screen.width/8, Screen.height/16), "Game Options", TextStyle);
+						
+			GUI.Box(new Rect(Screen.width/16*5, Screen.height/16*7, Screen.width/8, Screen.height/16), "Player Lifes", TextNearFieldStyle);
+			GUI.Box(new Rect(Screen.width/16*10, Screen.height/16*7, Screen.height/32, Screen.height/32),PlayerLife.ToString(),TextNearFieldStyle);
+		
+		    GUI.Box(new Rect(Screen.width/16*5, Screen.height/16*9, Screen.width/8, Screen.height/16), "Enemy Lifes", TextNearFieldStyle);
+			GUI.Box(new Rect(Screen.width/16*10, Screen.height/16*9, Screen.height/32, Screen.height/32), EnemyLife.ToString(), TextNearFieldStyle);
 			
-//			                           GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*11, Screen.width/9, Screen.height/16 - Screen.height/64), "Bullet Speed", BulletText);
-//			BulletSpeed = GUI.HorizontalSlider (new Rect (Screen.width/16*7, Screen.height/16*12, Screen.width/9, Screen.height/16), BulletSpeed, 5, 20);
+			GUI.Box(new Rect(Screen.width/16*5, Screen.height/16*11, Screen.width/8, Screen.height/16), "Flag Lifes", TextNearFieldStyle);
+			GUI.Box(new Rect(Screen.width/16*10, Screen.height/16*11, Screen.height/32, Screen.height/32), FlagLife.ToString(), TextNearFieldStyle);
 			
-			                       GUI.Box (new Rect(Screen.width/16*7, Screen.height/16*7, Screen.width/8, Screen.height/16), "Player Lifes", TextNearFieldStyle);
-			PlayerLifeValue = GUI.TextField(new Rect(Screen.width/16*9 - Screen.width/32, Screen.height/16*7, Screen.height/32, Screen.height/32),PlayerLifeValue,1,FieldStyle);
+			if (GUI.Button(new Rect(Screen.width/32*21, Screen.height/16*7, Screen.height/32, Screen.height/32),"+",ButtonStyle)) PlayerLife++;
+			if (GUI.Button(new Rect(Screen.width/32*19, Screen.height/16*7, Screen.height/32, Screen.height/32),"-",ButtonStyle)) PlayerLife--;
 			
-			if (IsNumber(PlayerLifeValue)) LastPlayerLifeValue = PlayerLifeValue; else PlayerLifeValue = LastPlayerLifeValue;
+			if (GUI.Button(new Rect(Screen.width/32*21, Screen.height/16*9, Screen.height/32, Screen.height/32),"+",ButtonStyle)) EnemyLife++;
+			if (GUI.Button(new Rect(Screen.width/32*19, Screen.height/16*9, Screen.height/32, Screen.height/32),"-",ButtonStyle)) EnemyLife--;
 			
-			                      GUI.Box (new Rect(Screen.width/16*7, Screen.height/2, Screen.width/8, Screen.height/16), "Enemy Lifes", TextNearFieldStyle);
-			EnemyLifeValue = GUI.TextField(new Rect(Screen.width/16*9 - Screen.width/32, Screen.height/2, Screen.height/32, Screen.height/32), EnemyLifeValue, 1, FieldStyle);
+			if (GUI.Button(new Rect(Screen.width/32*21, Screen.height/16*11, Screen.height/32, Screen.height/32),"+",ButtonStyle)) FlagLife++;
+			if (GUI.Button(new Rect(Screen.width/32*19, Screen.height/16*11, Screen.height/32, Screen.height/32),"-",ButtonStyle)) FlagLife--;
 			
-			if (IsNumber(EnemyLifeValue)) LastEnemyLifeValue = EnemyLifeValue; else EnemyLifeValue = LastEnemyLifeValue;
+			if (FlagLife > MaxFlagLife) FlagLife--;
+			if (FlagLife < 1) FlagLife++;
 			
-			                     GUI.Box (new Rect(Screen.width/16*7, Screen.height/16*9, Screen.width/8, Screen.height/16), "Flag Lifes", TextNearFieldStyle);
-			FlagLifeValue = GUI.TextField(new Rect(Screen.width/16*9 - Screen.width/32, Screen.height/16*9, Screen.height/32, Screen.height/32), FlagLifeValue, 1, FieldStyle);
+			if (PlayerLife > MaxPlayerLife) PlayerLife--;
+			if (PlayerLife < 1) PlayerLife++;
 			
-			if (IsNumber(FlagLifeValue)) LastFlagLifeValue = FlagLifeValue; else FlagLifeValue = LastFlagLifeValue;
+			if (EnemyLife > MaxEnemyLife) EnemyLife--;
+			if (EnemyLife < 1) EnemyLife++;
 			
-			if(GUI.Button(new Rect(Screen.width/16*7,Screen.height/16*13,Screen.width/8,Screen.height/16),"Back", ButtonStyle)) GameSettings = false;
+			
+			if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*13,Screen.width/5,Screen.height/10),"Back", ButtonStyle)) GameSettings = false;
 		}
 		
 		if ((MySettings)&&(HandleSettings)) {
@@ -174,18 +180,31 @@ public class Menu : MonoBehaviour {
 				GUI.Box (new Rect (Screen.width/16*10, Screen.height/16*10, Screen.width/8, Screen.height/16), "Move Right", ControlsStyle);
 				GUI.Box (new Rect (Screen.width/16*10, Screen.height/16*11, Screen.width/8, Screen.height/16), "Shoot", ControlsStyle);	
 			
-				GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*7, Screen.width/8, Screen.height/16), Player1UpSt, ControlsStyle);
-				GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*8, Screen.width/8, Screen.height/16), Player1DownSt, ControlsStyle);
-				GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*9, Screen.width/8, Screen.height/16), Player1LeftSt, ControlsStyle);
-				GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*10, Screen.width/8, Screen.height/16), Player1RightSt, ControlsStyle);
-				GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*11, Screen.width/8, Screen.height/16), Player1ShootSt, ControlsStyle);
+				if(!Player1UpInput)   GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*7, Screen.width/8, Screen.height/16), Player1UpSt, ControlsStyle);
+				if(!Player1DownInput) GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*8, Screen.width/8, Screen.height/16), Player1DownSt, ControlsStyle);
+				if(!Player1LeftInput)GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*9, Screen.width/8, Screen.height/16), Player1LeftSt, ControlsStyle);
+				if(!Player1RightInput) GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*10, Screen.width/8, Screen.height/16), Player1RightSt, ControlsStyle);
+				if(!Player1ShootInput)GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*11, Screen.width/8, Screen.height/16), Player1ShootSt, ControlsStyle);
 			
-				GUI.Box (new Rect (Screen.width/16*13, Screen.height/16*7, Screen.width/8, Screen.height/16), Player2UpSt, ControlsStyle);
-				GUI.Box (new Rect (Screen.width/16*13, Screen.height/16*8, Screen.width/8, Screen.height/16), Player2DownSt, ControlsStyle);
-				GUI.Box (new Rect (Screen.width/16*13, Screen.height/16*9, Screen.width/8, Screen.height/16), Player2LeftSt, ControlsStyle);
-				GUI.Box (new Rect (Screen.width/16*13, Screen.height/16*10, Screen.width/8, Screen.height/16), Player2RightSt, ControlsStyle);
-				GUI.Box (new Rect (Screen.width/16*13, Screen.height/16*11, Screen.width/8, Screen.height/16), Player2ShootSt, ControlsStyle);
-		
+				if(!Player2UpInput)   GUI.Box (new Rect (Screen.width/16*13, Screen.height/16*7, Screen.width/8, Screen.height/16), Player2UpSt, ControlsStyle);
+				if(!Player2DownInput) GUI.Box (new Rect (Screen.width/16*13, Screen.height/16*8, Screen.width/8, Screen.height/16), Player2DownSt, ControlsStyle);
+				if(!Player2LeftInput)GUI.Box (new Rect (Screen.width/16*13, Screen.height/16*9, Screen.width/8, Screen.height/16), Player2LeftSt, ControlsStyle);
+				if(!Player2RightInput) GUI.Box (new Rect (Screen.width/16*13, Screen.height/16*10, Screen.width/8, Screen.height/16), Player2RightSt, ControlsStyle);
+				if(!Player2ShootInput)GUI.Box (new Rect (Screen.width/16*13, Screen.height/16*11, Screen.width/8, Screen.height/16), Player2ShootSt, ControlsStyle);
+				
+				if(Player1UpInput)   GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*7, Screen.width/8, Screen.height/16), "Press Any Key", PressAnyKey);
+				if(Player1DownInput) GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*8, Screen.width/8, Screen.height/16), "Press Any Key", PressAnyKey);
+				if(Player1LeftInput)GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*9, Screen.width/8, Screen.height/16), "Press Any Key", PressAnyKey);
+				if(Player1RightInput) GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*10, Screen.width/8, Screen.height/16), "Press Any Key", PressAnyKey);
+				if(Player1ShootInput)GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*11, Screen.width/8, Screen.height/16), "Press Any Key", PressAnyKey);
+			
+				if(Player2UpInput)   GUI.Box (new Rect (Screen.width/16*13, Screen.height/16*7, Screen.width/8, Screen.height/16), "Press Any Key", PressAnyKey);
+				if(Player2DownInput) GUI.Box (new Rect (Screen.width/16*13, Screen.height/16*8, Screen.width/8, Screen.height/16), "Press Any Key", PressAnyKey);
+				if(Player2LeftInput)GUI.Box (new Rect (Screen.width/16*13, Screen.height/16*9, Screen.width/8, Screen.height/16), "Press Any Key", PressAnyKey);
+				if(Player2RightInput) GUI.Box (new Rect (Screen.width/16*13, Screen.height/16*10, Screen.width/8, Screen.height/16), "Press Any Key", PressAnyKey);
+				if(Player2ShootInput)GUI.Box (new Rect (Screen.width/16*13, Screen.height/16*11, Screen.width/8, Screen.height/16), "Press Any Key", PressAnyKey);
+				
+			
 				if (GUI.Button (new Rect (Screen.width/16*4, Screen.height/16*7, Screen.width/16*4, Screen.height/16), "", ButtonInputStyle))	 Player1UpInput = true;
 				if (GUI.Button (new Rect (Screen.width/16*4, Screen.height/16*8, Screen.width/16*4, Screen.height/16), "", ButtonInputStyle))	 Player1DownInput = true;
 				if (GUI.Button (new Rect (Screen.width/16*4, Screen.height/16*9, Screen.width/16*4, Screen.height/16), "", ButtonInputStyle))	 Player1LeftInput = true;
@@ -210,22 +229,20 @@ public class Menu : MonoBehaviour {
 				if ((Ev.isKey)&&(Player2RightInput)) {Player2Right = Ev.keyCode; Player2RightInput = false;}
 				if ((Ev.isKey)&&(Player2ShootInput)) {Player2Shoot = Ev.keyCode; Player2ShootInput = false;}
 			
-				if(GUI.Button(new Rect(Screen.width/16*7,Screen.height/16*13,Screen.width/8,Screen.height/16),"Back", ButtonStyle)) HandleSettings = false;
+				if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*13,Screen.width/5,Screen.height/10),"Back", ButtonStyle)) HandleSettings = false;
 		}
 		
 		if ((MySettings)&&(!HandleSettings)&&(!GameSettings)) {
 			
-			if(GUI.Button(new Rect(Screen.width/16*7,Screen.height/16*7,Screen.width/8,Screen.height/16),"Game Options",ButtonStyle)) GameSettings = true;	
-			if(GUI.Button(new Rect(Screen.width/16*7,Screen.height/16*9,Screen.width/8,Screen.height/16),"Controls", ButtonStyle)) HandleSettings = true;
+			if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*7,Screen.width/5,Screen.height/10),"Game Options",ButtonStyle)) GameSettings = true;	
+			if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*9,Screen.width/5,Screen.height/10),"Controls", ButtonStyle)) HandleSettings = true;
 			
-			GUI.Box (new Rect (Screen.width/16*7, Screen.height/2-Screen.height/4, Screen.width/8, Screen.height/16), "Options", TextStyle);
-			if(GUI.Button(new Rect(Screen.width/16*7,Screen.height/16*13,Screen.width/8,Screen.height/16),"Back", ButtonStyle)) { 			
-				MySettings = false;
-			}
+			GUI.Box (new Rect (Screen.width/10*4, Screen.height/2-Screen.height/4, Screen.width/5, Screen.height/16), "Options", TextStyle);
+			if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*13,Screen.width/5,Screen.height/10),"Back", ButtonStyle)) MySettings = false;
 		}
 		if (About) {	
-			GUI.Box(new Rect(Screen.width/16*7, Screen.height/16*4, Screen.width/8, Screen.height/16), "About", TextStyle);
-			if(GUI.Button(new Rect(Screen.width/16*7,Screen.height/16*13,Screen.width/8,Screen.height/16),"Back", ButtonStyle)) About = false;
+			GUI.Box(new Rect(Screen.width/10*4, Screen.height/16*4, Screen.width/5, Screen.height/10), "About", TextStyle);
+			if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*13,Screen.width/5,Screen.height/10),"Back", ButtonStyle)) About = false;
 		}
 			
 	}	
