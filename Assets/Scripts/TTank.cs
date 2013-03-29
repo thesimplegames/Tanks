@@ -19,7 +19,7 @@ public class TTank : MonoBehaviour {
 		speed = 3.5f;
 		speedMod = 0;
 		shield = 0;
-		life = 3;
+		life = Settings.tankHP;
 		isMoving = false;
 		direction = new Vector2 (0,-1);
 		if (type == 0) {

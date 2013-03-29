@@ -40,6 +40,7 @@ public class LevelCreator : MonoBehaviour {
 		nothing = Resources.Load("Prefabs/Nothing") as GameObject;
 		tank = Resources.Load("Prefabs/Tank") as GameObject;
 		
+		
 		Instantiate(nothing, new Vector3(0,0,8), nothing.transform.rotation);
 		
 		for (int i = 0; i < hor; i++)
@@ -61,21 +62,23 @@ public class LevelCreator : MonoBehaviour {
 						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
 						tankObject.GetComponent<TTank>().type = 0;
 						tankObject.transform.tag = "Enemy";
+						tankObject.GetComponent<TTank>().life=Settings.enemyHP;
 						break;
 					case 6: 
 						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
 						tankObject.GetComponent<TTank>().type = 1;
-						//tankObject.GetComponent<TTank>().spawnPosition=tank.transform.position;
 						tankObject.GetComponent<Handler>().SetKeyCodes(Settings.Player1);
 						tankObject.transform.tag = "Player1";
 						
 						break;
 					case 7: 
-						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
-						tankObject.GetComponent<TTank>().type = 1;
-						tankObject.GetComponent<Handler>().SetKeyCodes(Settings.Player2);
-						tankObject.transform.tag = "Player2";
-						tankObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/SilverTank") as Texture;
+						if (Settings.TwoPlayers){
+							tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
+							tankObject.GetComponent<TTank>().type = 1;
+							tankObject.GetComponent<Handler>().SetKeyCodes(Settings.Player2);
+							tankObject.transform.tag = "Player2";
+							tankObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/SilverTank") as Texture;
+						}
 						break;
 					case 8: 
 						Instantiate(megaWall, new Vector2(i, j), megaWall.transform.rotation);

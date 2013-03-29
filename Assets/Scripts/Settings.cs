@@ -8,5 +8,6 @@ public class Settings : MonoBehaviour {
 	public static int tankHP;
 	public static int enemyHP;
 	public static int eagleHP;
+	public static bool TwoPlayers = false;
 	
 }
