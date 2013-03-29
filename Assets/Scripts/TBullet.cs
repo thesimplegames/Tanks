@@ -24,8 +24,17 @@ public class TBullet : MonoBehaviour {
 				break;
 			case "Bush": 
 				break;	
-			case "Tank":
+			case "Player1":
 				col.gameObject.GetComponent<TTank>().Shooted();
+				Destroy(this.gameObject);
+				break;		
+			case "Player2":
+				col.gameObject.GetComponent<TTank>().Shooted();
+				Destroy(this.gameObject);
+				break;		
+			case "Enemy":
+				col.gameObject.GetComponent<TTank>().Shooted();
+				Destroy(this.gameObject);
 				break;		
 			default:			
 				Destroy(col.gameObject);

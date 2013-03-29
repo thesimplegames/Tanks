@@ -48,6 +48,7 @@
      <Compile Include="Assets\Scripts\Handler.cs" />
      <Compile Include="Assets\Scripts\LevelCreator.cs" />
      <Compile Include="Assets\Scripts\Menu.cs" />
+     <Compile Include="Assets\Scripts\Settings.cs" />
      <Compile Include="Assets\Scripts\TBullet.cs" />
      <Compile Include="Assets\Scripts\TPowerUp.cs" />
      <Compile Include="Assets\Scripts\TTank.cs" />

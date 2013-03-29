@@ -19,20 +19,22 @@ public class TTank : MonoBehaviour {
 		speed = 3.5f;
 		speedMod = 0;
 		shield = 0;
-		life = 2;
+		life = 3;
 		isMoving = false;
-		direction = new Vector2 (1,0);
+		direction = new Vector2 (0,-1);
 		if (type == 0) {
 			gameObject.GetComponent<EnemyBehaviour>().enabled = true;
 			gameObject.GetComponent<Handler>().enabled = false;
 		}
+		spawnPosition=transform.position;
 	}
 	
 	public void Shooted(){
+		Debug.Log(tag+life.ToString());
 		if (shield>0) shield=0;
 			else {
 		life--;	
-		transform.position=spawnPosition;
+	//	transform.position=spawnPosition;
 		}
 	}	
 	
@@ -74,7 +76,6 @@ public class TTank : MonoBehaviour {
 		if(life==0) Destroy(gameObject);
 		if (isMoving){
 			
-				Debug.Log(gameObject.tag+targetPosition.ToString()+transform.position.ToString());
 			transform.position=new Vector3 (transform.position.x+direction.x*speed*Time.deltaTime,
 											transform.position.y+direction.y*speed*Time.deltaTime,
 											transform.position.z);

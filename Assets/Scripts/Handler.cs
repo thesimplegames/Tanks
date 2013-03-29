@@ -18,7 +18,7 @@ public class Handler : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		tank=this.gameObject.GetComponent<TTank>();
-		direction = new Vector2 (1,0);
+		direction = new Vector2 (0,-1);
 	}
 	
 	// Update is called once per frame
@@ -27,7 +27,7 @@ public class Handler : MonoBehaviour {
 			tank.Shoot();
 		}
 		if (!tank.isMoving){
-			if (tank.type == 1){ //First player
+			if (tank.type != 0){ //First player
 				if (Input.GetKey(handleParams[0])) {
 					direction = new Vector2 (0,1);
 					tank.Move (direction);

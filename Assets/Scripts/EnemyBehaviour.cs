@@ -11,12 +11,15 @@ public class EnemyBehaviour : MonoBehaviour {
 	Vector2 falseDirection;
 	bool up, down, left, right;
 	float upd, downd, leftd, rightd;
-	
+	float r= Random.value;
 	void Start () {
 		
 		tank = gameObject.GetComponent<TTank>();
 		tank.isMoving = false;
-		endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
+		if (r<=0.5f) 
+		endObject = GameObject.FindGameObjectWithTag("Player1").transform.position; 
+		else 
+		endObject = GameObject.FindGameObjectWithTag("Player2").transform.position; 
 		if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), out hit, 1)) 
 			right = false;
 		else right = true;
@@ -58,8 +61,12 @@ public class EnemyBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Time.time > 0.1f) {
-			Debug.Log("enemybeh1");
-			endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
+			
+		if (r<=0.5f) 
+		endObject = GameObject.FindGameObjectWithTag("Player1").transform.position; 
+		else 
+		endObject = GameObject.FindGameObjectWithTag("Player2").transform.position; 
+			
 			if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), out hit, 1.2f)) 
 				right = false;
 			else right = true;
