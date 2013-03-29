@@ -7,7 +7,7 @@ public class Menu : MonoBehaviour {
 	
 	//int FontSize;
 	
-	bool Settings = false;
+	bool MySettings = false;
 	bool GameSettings = false;
 	bool HandleSettings = false;
 	bool About=false;
@@ -50,10 +50,10 @@ public class Menu : MonoBehaviour {
 	bool Player2RightInput = false;
 	bool Player2ShootInput = false;
 	
-	public static int PlayerLife = 1;
-	public static int EnemyLife = 1;
-	public static int FlagLife = 1;
-	public static float BulletSpeed = 10.0f;
+	int PlayerLife = 1;
+	int EnemyLife = 1;
+	int FlagLife = 1;
+//	public static float BulletSpeed = 10.0f;
 	
 	string PlayerLifeValue = "1";
 	string EnemyLifeValue = "1";
@@ -80,6 +80,23 @@ public class Menu : MonoBehaviour {
 	
 	void StartGame() {
 		
+		Settings.Player1[0] = Player1Up;
+		Settings.Player1[1] = Player1Left;
+		Settings.Player1[2] = Player1Down;
+		Settings.Player1[3] = Player1Right;
+		Settings.Player1[4] = Player1Shoot;
+		
+		Settings.Player2[0] = Player2Up;
+		Settings.Player2[1] = Player2Left;
+		Settings.Player2[2] = Player2Down;
+		Settings.Player2[3] = Player2Right;
+		Settings.Player2[4] = Player2Shoot;
+		
+		Settings.tankHP = PlayerLife;
+		Settings.enemyHP = EnemyLife;
+		Settings.eagleHP = FlagLife;
+		
+		Application.LoadLevel("tanks");	
 	}
 	
 	void OnGUI () {
@@ -92,20 +109,20 @@ public class Menu : MonoBehaviour {
 		ControlsStyle.fontSize = Screen.height/30;
 		
 		
-		if ((!Settings)&&(!About)) {
+		if ((!MySettings)&&(!About)) {
 			      GUI.Box(new Rect(Screen.width/16*7, Screen.height/16*4, Screen.width/8, Screen.height/16), "Menu", TextStyle);
 			if(GUI.Button(new Rect(Screen.width/16*7, Screen.height/16*7, Screen.width/8, Screen.height/16), "Start game",ButtonStyle)) StartGame();
-			if(GUI.Button(new Rect(Screen.width/16*7, Screen.height/16*9, Screen.width/8, Screen.height/16), "Options", ButtonStyle)) Settings = true;
+			if(GUI.Button(new Rect(Screen.width/16*7, Screen.height/16*9, Screen.width/8, Screen.height/16), "Options", ButtonStyle)) MySettings = true;
 			if(GUI.Button(new Rect(Screen.width/16*7, Screen.height/16*11,Screen.width/8, Screen.height/16), "About", ButtonStyle)) About = true;
 			if(GUI.Button(new Rect(Screen.width/16*7, Screen.height/16*13,Screen.width/8, Screen.height/16), "Exit", ButtonStyle)) Application.Quit();
 		
 		}
 		
-		if ((Settings)&&(GameSettings)) {
+		if ((MySettings)&&(GameSettings)) {
 			GUI.Box (new Rect (Screen.width/16*7, Screen.height/2-Screen.height/4, Screen.width/8, Screen.height/16), "Game Options", TextStyle);
 			
-			                           GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*11, Screen.width/9, Screen.height/16 - Screen.height/64), "Bullet Speed", BulletText);
-			BulletSpeed = GUI.HorizontalSlider (new Rect (Screen.width/16*7, Screen.height/16*12, Screen.width/9, Screen.height/16), BulletSpeed, 5, 20);
+//			                           GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*11, Screen.width/9, Screen.height/16 - Screen.height/64), "Bullet Speed", BulletText);
+//			BulletSpeed = GUI.HorizontalSlider (new Rect (Screen.width/16*7, Screen.height/16*12, Screen.width/9, Screen.height/16), BulletSpeed, 5, 20);
 			
 			                       GUI.Box (new Rect(Screen.width/16*7, Screen.height/16*7, Screen.width/8, Screen.height/16), "Player Lifes", TextNearFieldStyle);
 			PlayerLifeValue = GUI.TextField(new Rect(Screen.width/16*9 - Screen.width/32, Screen.height/16*7, Screen.height/32, Screen.height/32),PlayerLifeValue,1,FieldStyle);
@@ -125,7 +142,7 @@ public class Menu : MonoBehaviour {
 			if(GUI.Button(new Rect(Screen.width/16*7,Screen.height/16*13,Screen.width/8,Screen.height/16),"Back", ButtonStyle)) GameSettings = false;
 		}
 		
-		if ((Settings)&&(HandleSettings)) {
+		if ((MySettings)&&(HandleSettings)) {
 				Ev = Event.current;
 				
 				Player1UpSt = Player1Up.ToString();
@@ -196,14 +213,14 @@ public class Menu : MonoBehaviour {
 				if(GUI.Button(new Rect(Screen.width/16*7,Screen.height/16*13,Screen.width/8,Screen.height/16),"Back", ButtonStyle)) HandleSettings = false;
 		}
 		
-		if ((Settings)&&(!HandleSettings)&&(!GameSettings)) {
+		if ((MySettings)&&(!HandleSettings)&&(!GameSettings)) {
 			
 			if(GUI.Button(new Rect(Screen.width/16*7,Screen.height/16*7,Screen.width/8,Screen.height/16),"Game Options",ButtonStyle)) GameSettings = true;	
 			if(GUI.Button(new Rect(Screen.width/16*7,Screen.height/16*9,Screen.width/8,Screen.height/16),"Controls", ButtonStyle)) HandleSettings = true;
 			
 			GUI.Box (new Rect (Screen.width/16*7, Screen.height/2-Screen.height/4, Screen.width/8, Screen.height/16), "Options", TextStyle);
 			if(GUI.Button(new Rect(Screen.width/16*7,Screen.height/16*13,Screen.width/8,Screen.height/16),"Back", ButtonStyle)) { 			
-				Settings = false;
+				MySettings = false;
 			}
 		}
 		if (About) {	
