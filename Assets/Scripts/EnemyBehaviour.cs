@@ -12,8 +12,11 @@ public class EnemyBehaviour : MonoBehaviour {
 	Vector2 falseDirection;
 	bool up, down, left, right, isTank;
 	float upd, downd, leftd, rightd;
-	public bool player1Destroyed = false, player2Destroyed = false;
+	public bool player1Destroyed, player2Destroyed;
 	void Start () {
+		
+		player1Destroyed = GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player1Destroyed;
+		player2Destroyed = GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player2Destroyed;
 		
 		tank = gameObject.GetComponent<TTank>();
 		tank.isMoving = false;
@@ -77,10 +80,12 @@ public class EnemyBehaviour : MonoBehaviour {
 	void Update () {
 		if (Time.time > 0.1f) {
 			
-			Debug.Log(player1Destroyed);
+			player1Destroyed = GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player1Destroyed;
+			player2Destroyed = GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player2Destroyed;
 			
 			if (!Settings.TwoPlayers) {
 				player2Destroyed = true;
+				GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player2Destroyed = true;
 				if (!player1Destroyed) 
 					if ((player1.transform.position - transform.position).magnitude < (eagle.transform.position - transform.position).magnitude)
 						endObject = player1.transform.position;

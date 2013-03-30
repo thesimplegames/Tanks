@@ -80,11 +80,9 @@ public class TTank : MonoBehaviour {
 	void Update () {
 		if(life<=0) {
 			if (type == 1)
-				if (GameObject.FindGameObjectWithTag("Enemy") != null)
-					GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyBehaviour>().player1Destroyed = true;
+				GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player1Destroyed = true;
 			if (type == 2)
-				if (GameObject.FindGameObjectWithTag("Enemy") != null)
-					GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyBehaviour>().player2Destroyed = true;	
+				GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player2Destroyed = true;	
 			Destroy(gameObject);
 		}
 		if (isMoving){

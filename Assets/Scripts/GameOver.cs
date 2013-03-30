@@ -16,6 +16,10 @@ public class GameOver : MonoBehaviour {
 	
 	void OnGUI() {
 		
+		if (GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player1Destroyed && GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player2Destroyed)
+			IsGameOver = true;
+		else IsGameOver = false;
+		
 		if (IsGameOver) {
 			TextStyle.fontSize = Screen.height/15;
 			ButtonStyle.fontSize = Screen.height/30; 
@@ -31,12 +35,8 @@ public class GameOver : MonoBehaviour {
 			GUI.Box(new Rect(Screen.width/10*4, Screen.height/16*8, Screen.width/5, Screen.height/10), "Best " + Best.ToString(), TextStyle);
 			
 			if(GUI.Button(new Rect(Screen.width/10*2, Screen.height/16*13,Screen.width/5, Screen.height/10), "Exit", ButtonStyle)) Application.LoadLevel("MenuScene");
-			if(GUI.Button(new Rect(Screen.width/10*6, Screen.height/16*13,Screen.width/5, Screen.height/10), "Restart", ButtonStyle)) Application.LoadLevel("tanks");
+			if(GUI.Button(new Rect(Screen.width/10*6, Screen.height/16*13,Screen.width/5, Screen.height/10), "Restart", ButtonStyle)) {IsGameOver=false; Application.LoadLevel("tanks");}
 		}
-	}
-	
-	void Update() {
-		IsGameOver = GO;
 	}
 	
 }
