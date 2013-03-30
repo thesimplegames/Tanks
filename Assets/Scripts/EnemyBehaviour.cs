@@ -5,31 +5,35 @@ public class EnemyBehaviour : MonoBehaviour {
 	
 	Vector3 endObject;
 	private TTank tank;
-	RaycastHit hit;
 	Vector2 direction;
 	int count;
+	RaycastHit hit;
 	Vector2 falseDirection;
-	bool up, down, left, right;
+	bool up, down, left, right, isTank;
 	float upd, downd, leftd, rightd;
-	float r= Random.value;
 	void Start () {
 		
 		tank = gameObject.GetComponent<TTank>();
 		tank.isMoving = false;
-		if (r<=0.5f) 
-		endObject = GameObject.FindGameObjectWithTag("Player1").transform.position; 
-		else 
-		endObject = GameObject.FindGameObjectWithTag("Player2").transform.position; 
-		if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), out hit, 1)) 
+		
+		if ((GameObject.FindGameObjectWithTag("Player1").transform.position - transform.position).magnitude < (GameObject.FindGameObjectWithTag("Player2").transform.position - transform.position).magnitude)
+			endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
+		else endObject = GameObject.FindGameObjectWithTag("Player2").transform.position;
+		if (GameObject.FindGameObjectWithTag("Player1") == null)
+			endObject = GameObject.FindGameObjectWithTag("Player2").transform.position;
+		if (GameObject.FindGameObjectWithTag("Player2") == null)
+			endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
+
+		if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), 1)) 
 			right = false;
 		else right = true;
-		if (Physics.Raycast(new Ray(transform.position, new Vector2(0, 1)), out hit, 1)) 
+		if (Physics.Raycast(new Ray(transform.position, new Vector2(0, 1)), 1)) 
 			up = false;
 		else up = true;
-		if (Physics.Raycast(new Ray(transform.position, new Vector2(-1, 0)), out hit, 1)) 
+		if (Physics.Raycast(new Ray(transform.position, new Vector2(-1, 0)), 1)) 
 			left = false;
 		else left = true;
-		if (Physics.Raycast(new Ray(transform.position, new Vector2(0, -1)), out hit, 1)) 
+		if (Physics.Raycast(new Ray(transform.position, new Vector2(0, -1)), 1)) 
 			down = false;
 		else down = true;
 		
@@ -62,29 +66,64 @@ public class EnemyBehaviour : MonoBehaviour {
 	void Update () {
 		if (Time.time > 0.1f) {
 			
-		if (r<=0.5f) 
-		endObject = GameObject.FindGameObjectWithTag("Player1").transform.position; 
-		else 
-		endObject = GameObject.FindGameObjectWithTag("Player2").transform.position; 
+			if (GameObject.FindGameObjectWithTag("Player1") == null)
+				endObject = GameObject.FindGameObjectWithTag("Player2").transform.position;
+			else if (GameObject.FindGameObjectWithTag("Player2") == null)
+				endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
+			else if ((GameObject.FindGameObjectWithTag("Player1").transform.position - transform.position).magnitude < (GameObject.FindGameObjectWithTag("Player2").transform.position - transform.position).magnitude)
+				endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
+			else endObject = GameObject.FindGameObjectWithTag("Player2").transform.position;
 			
-			if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), out hit, 1.2f)) 
+			if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), 1)) 
 				right = false;
 			else right = true;
-			if (Physics.Raycast(new Ray(transform.position, new Vector2(0, 1)), out hit, 1.2f)) 
+			if (Physics.Raycast(new Ray(transform.position, new Vector2(0, 1)), 1)) 
 				up = false; 
 			else up = true;
-			if (Physics.Raycast(new Ray(transform.position, new Vector2(-1, 0)), out hit, 1.2f)) 
+			if (Physics.Raycast(new Ray(transform.position, new Vector2(-1, 0)), 1)) 
 				left = false; 
 			else left = true;
-			if (Physics.Raycast(new Ray(transform.position, new Vector2(0, -1)), out hit, 1.2f)) 
+			if (Physics.Raycast(new Ray(transform.position, new Vector2(0, -1)), 1)) 
 				down = false;
 			else down = true;
+			
+			
 			if (!tank.isMoving) {
 				
+				isTank = false;
 				
-				Debug.Log("1");
+				if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), out hit, 100) && (hit.transform.tag == "Player1" || hit.transform.tag == "Player2")) {
+					isTank = true;
+					transform.eulerAngles = new Vector3 (90,270,90);
+					transform.GetComponent<TTank>().direction = Vector2.right;
+				}
+				if (Physics.Raycast(new Ray(transform.position, new Vector2(0, 1)), out hit, 100) && (hit.transform.tag == "Player1" || hit.transform.tag == "Player2")) {
+					isTank = true; 
+					transform.eulerAngles = new Vector3 (180,270,90);
+					transform.GetComponent<TTank>().direction = Vector2.up;
+				}
+				if (Physics.Raycast(new Ray(transform.position, new Vector2(-1, 0)), out hit, 100) && (hit.transform.tag == "Player1" || hit.transform.tag == "Player2")) {
+					isTank = true; 
+					transform.eulerAngles = new Vector3 (270,270,90);
+					transform.GetComponent<TTank>().direction = -Vector2.right;
+				}
+				if (Physics.Raycast(new Ray(transform.position, new Vector2(0, -1)), out hit, 100) && (hit.transform.tag == "Player1" || hit.transform.tag == "Player2")) {
+					isTank = true;
+					transform.eulerAngles = new Vector3 (0,270,90);
+					transform.GetComponent<TTank>().direction = -Vector2.up;
+				}
+				
+				if (isTank) tank.Move(transform.GetComponent<TTank>().direction);
+				
+			}
+			
+			
+			if (isTank && (int)(Time.time / 2f) == Mathf.Round(Time.time / 2f))
+				tank.Shoot();
+			
+			if (!tank.isMoving && !isTank) {
+			
 				count = 0;
-				
 				
 				if (right) count++;
 				if (left) count++;
@@ -135,7 +174,6 @@ public class EnemyBehaviour : MonoBehaviour {
 					}
 				
 				tank.Move(direction);
-				tank.Shoot();
 			}
 		}	
 	}

@@ -11,7 +11,7 @@ public class TTank : MonoBehaviour {
 	public bool isMoving;
 	public Vector3 spawnPosition;
 	private Vector3 targetPosition;
-	private Vector2 direction;
+	public Vector2 direction;
 	private GameObject bullet;
 	
 	// Use this for initialization
@@ -19,7 +19,8 @@ public class TTank : MonoBehaviour {
 		speed = 3.5f;
 		speedMod = 0;
 		shield = 0;
-		life = Settings.tankHP;
+		if (type != 0) life = Settings.tankHP;
+		else life = Settings.enemyHP;
 		isMoving = false;
 		direction = new Vector2 (0,-1);
 		if (type == 0) {
@@ -66,7 +67,7 @@ public class TTank : MonoBehaviour {
 			TBullet myBullet = bullet.GetComponent<TBullet>();
 			myBullet.direction = direction;
 			myBullet.parent=gameObject;
-			bullet.transform.position = transform.position;
+			bullet.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.3f);
 			bullet.transform.rotation = transform.rotation;
 		}			
 	}

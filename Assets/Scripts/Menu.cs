@@ -50,9 +50,6 @@ public class Menu : MonoBehaviour {
 	bool Player2RightInput = false;
 	bool Player2ShootInput = false;
 	
-	int PlayerLife = 1;
-	int EnemyLife = 1;
-	int FlagLife = 1;
 //	public static float BulletSpeed = 10.0f;
 	
 	string PlayerLifeValue = "1";
@@ -92,9 +89,9 @@ public class Menu : MonoBehaviour {
 		Settings.Player2[3] = Player2Right;
 		Settings.Player2[4] = Player2Shoot;
 		
-		Settings.tankHP = PlayerLife;
-		Settings.enemyHP = EnemyLife;
-		Settings.eagleHP = FlagLife;
+		Settings.tankHP = int.Parse(PlayerLifeValue);
+		Settings.enemyHP = int.Parse(EnemyLifeValue);
+		Settings.eagleHP = int.Parse(FlagLifeValue);
 		
 		Application.LoadLevel("tanks");	
 	}
@@ -124,17 +121,17 @@ public class Menu : MonoBehaviour {
 //			                           GUI.Box (new Rect (Screen.width/16*7, Screen.height/16*11, Screen.width/9, Screen.height/16 - Screen.height/64), "Bullet Speed", BulletText);
 //			BulletSpeed = GUI.HorizontalSlider (new Rect (Screen.width/16*7, Screen.height/16*12, Screen.width/9, Screen.height/16), BulletSpeed, 5, 20);
 			
-			                       GUI.Box (new Rect(Screen.width/16*7, Screen.height/16*7, Screen.width/8, Screen.height/16), "Player Lifes", TextNearFieldStyle);
+			                       GUI.Box (new Rect(Screen.width/16*7, Screen.height/16*7, Screen.width/8, Screen.height/16), "Player Lives", TextNearFieldStyle);
 			PlayerLifeValue = GUI.TextField(new Rect(Screen.width/16*9 - Screen.width/32, Screen.height/16*7, Screen.height/32, Screen.height/32),PlayerLifeValue,1,FieldStyle);
 			
 			if (IsNumber(PlayerLifeValue)) LastPlayerLifeValue = PlayerLifeValue; else PlayerLifeValue = LastPlayerLifeValue;
 			
-			                      GUI.Box (new Rect(Screen.width/16*7, Screen.height/2, Screen.width/8, Screen.height/16), "Enemy Lifes", TextNearFieldStyle);
+			                      GUI.Box (new Rect(Screen.width/16*7, Screen.height/2, Screen.width/8, Screen.height/16), "Enemy Lives", TextNearFieldStyle);
 			EnemyLifeValue = GUI.TextField(new Rect(Screen.width/16*9 - Screen.width/32, Screen.height/2, Screen.height/32, Screen.height/32), EnemyLifeValue, 1, FieldStyle);
 			
 			if (IsNumber(EnemyLifeValue)) LastEnemyLifeValue = EnemyLifeValue; else EnemyLifeValue = LastEnemyLifeValue;
 			
-			                     GUI.Box (new Rect(Screen.width/16*7, Screen.height/16*9, Screen.width/8, Screen.height/16), "Flag Lifes", TextNearFieldStyle);
+			                     GUI.Box (new Rect(Screen.width/16*7, Screen.height/16*9, Screen.width/8, Screen.height/16), "Flag Lives", TextNearFieldStyle);
 			FlagLifeValue = GUI.TextField(new Rect(Screen.width/16*9 - Screen.width/32, Screen.height/16*9, Screen.height/32, Screen.height/32), FlagLifeValue, 1, FieldStyle);
 			
 			if (IsNumber(FlagLifeValue)) LastFlagLifeValue = FlagLifeValue; else FlagLifeValue = LastFlagLifeValue;

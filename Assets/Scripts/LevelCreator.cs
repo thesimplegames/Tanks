@@ -3,11 +3,11 @@ using System.Collections;
 
 public class LevelCreator : MonoBehaviour {
 	
-	const int hor = 10;
-	const int ver = 10;
+	const int hor = 30;
+	const int ver = 50;
 	
 	public int [,] table = new int [hor, ver] 
-	{{8, 8, 8, 8, 8, 8, 8, 8, 8, 8}, 
+	/*{{8, 8, 8, 8, 8, 8, 8, 8, 8, 8}, 
 	 {8, 1, 2, 1, 1, 0, 0, 0, 4, 8}, 
 	 {8, 3, 0, 0, 1, 0, 1, 1, 0, 8}, 
 	 {8, 0, 1, 7, 1, 0, 1, 1, 0, 8},
@@ -16,7 +16,7 @@ public class LevelCreator : MonoBehaviour {
 	 {8, 0, 1, 1, 1, 1, 1, 0, 0, 8},
 	 {8, 0, 1, 1, 0, 0, 0, 2, 1, 8},
 	 {8, 0, 0, 6, 0, 1, 1, 1, 0, 8},
-	 {8, 8, 8, 8, 8, 8, 8, 8, 8, 8}};
+	 {8, 8, 8, 8, 8, 8, 8, 8, 8, 8}}*/;
 	
 	GameObject wall;
 	GameObject megaWall;
@@ -32,6 +32,9 @@ public class LevelCreator : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 			
+		Camera.main.transform.position = new Vector3 ((hor - 1) / 2f, (ver - 1) / 2f, -4);
+		Camera.main.orthographicSize = ver * 0.5f;
+		
 		bush = Resources.Load("Prefabs/Bush") as GameObject;
 		wall = Resources.Load("Prefabs/Wall") as GameObject;
 		megaWall = Resources.Load("Prefabs/MegaWall") as GameObject;
@@ -40,6 +43,11 @@ public class LevelCreator : MonoBehaviour {
 		nothing = Resources.Load("Prefabs/Nothing") as GameObject;
 		tank = Resources.Load("Prefabs/Tank") as GameObject;
 		
+		for (int i = 0; i < hor; i++)
+			for (int j = 0; j < ver; j++)
+				table[i ,j] = 0;
+		
+		table[0,0] = 8; table [29,49] = 8;
 		
 		Instantiate(nothing, new Vector3(0,0,8), nothing.transform.rotation);
 		
@@ -62,7 +70,6 @@ public class LevelCreator : MonoBehaviour {
 						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
 						tankObject.GetComponent<TTank>().type = 0;
 						tankObject.transform.tag = "Enemy";
-						tankObject.GetComponent<TTank>().life=Settings.enemyHP;
 						break;
 					case 6: 
 						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
