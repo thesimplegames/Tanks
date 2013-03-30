@@ -12,6 +12,7 @@ public class TTank : MonoBehaviour {
 	public Vector3 spawnPosition;
 	private Vector3 targetPosition;
 	public Vector2 direction;
+	public float deltaStep;
 	private GameObject bullet;
 	
 	// Use this for initialization
@@ -19,6 +20,7 @@ public class TTank : MonoBehaviour {
 		speed = 3.5f;
 		speedMod = 0;
 		shield = 0;
+		deltaStep=4;
 		if (type != 0) life = Settings.tankHP;
 		else life = Settings.enemyHP;
 		isMoving = false;
@@ -31,13 +33,47 @@ public class TTank : MonoBehaviour {
 	}
 	
 	public void Shooted(){
-		Debug.Log(tag+life.ToString());
+//		Debug.Log(tag+life.ToString());
 		if (shield>0) shield=0;
 			else {
 		life--;	
 	//	transform.position=spawnPosition;
 		}
 	}	
+	
+	public bool CanMove(Vector2 direction_){
+		if (gameObject.tag!="Enemy")
+		Debug.Log (direction_);
+		float rayLength=0.55f;
+		Ray ray = new Ray (transform.position, new Vector3(direction_.x, direction_.y, transform.position.z));
+		RaycastHit hit;
+		if (Physics.Raycast(ray, out hit, rayLength)) {
+			
+		
+		if (gameObject.tag!="Enemy")Debug.Log (1);
+			return false;
+		}	
+		ray = new Ray (new Vector3(transform.position.x+direction_.y/4,transform.position.y+direction_.x/4,transform.position.z),
+						new Vector3(direction_.x, direction_.y, transform.position.z));
+		if (Physics.Raycast(ray, out hit, rayLength)) {
+			
+		
+		if (gameObject.tag!="Enemy")Debug.Log (2);
+			return false;
+		}	
+		
+		ray = new Ray (new Vector3(transform.position.x-direction_.y/4,transform.position.y-direction_.x/4,transform.position.z),
+						new Vector3(direction_.x, direction_.y, transform.position.z));
+		if (Physics.Raycast(ray, out hit, rayLength)) {
+			
+		
+		if (gameObject.tag!="Enemy")Debug.Log (3);
+			return false;
+		}	
+		
+		if (gameObject.tag!="Enemy")Debug.Log (true);
+		return true;
+	}
 	
 	public void Move(Vector2 direction_){
 		direction = direction_;
@@ -53,13 +89,9 @@ public class TTank : MonoBehaviour {
 		if (direction==Vector2.right){
 		transform.eulerAngles = new Vector3 (90,270,90);
 		}
-		isMoving = true;
-		targetPosition = new Vector3 (transform.position.x+direction.x,transform.position.y+direction.y,transform.position.z);
-		Ray ray = new Ray (transform.position, new Vector3(direction.x, direction.y, transform.position.z));
-		RaycastHit hit;
-		if (Physics.Raycast(ray, out hit, 1)) {
-			isMoving = false;
-		}			
+		isMoving = CanMove(direction);
+		targetPosition = new Vector3 (transform.position.x+direction.x/deltaStep,transform.position.y+direction.y/deltaStep,transform.position.z);
+				
 	}
 	public void Shoot(){
 		if (bullet == null){
@@ -75,8 +107,8 @@ public class TTank : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(life==0) Destroy(gameObject);
-		if (isMoving){
-			
+		if (isMoving) {
+			isMoving=CanMove(direction);
 			transform.position=new Vector3 (transform.position.x+direction.x*speed*Time.deltaTime,
 											transform.position.y+direction.y*speed*Time.deltaTime,
 											transform.position.z);

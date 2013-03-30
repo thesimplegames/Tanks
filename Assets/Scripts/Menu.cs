@@ -124,8 +124,8 @@ public class Menu : MonoBehaviour {
 			
 			GUI.Box (new Rect (Screen.width/16*7, Screen.height/2-Screen.height/4, Screen.width/8, Screen.height/16), "Start Game", TextStyle);
 			
-			if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*7,Screen.width/5,Screen.height/10),"1 Player",ButtonStyle)) {Settings.TwoPlayers = false; Application.LoadLevel("tanks");}	
-			if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*9,Screen.width/5,Screen.height/10),"2 Players", ButtonStyle)) {Settings.TwoPlayers = true; Application.LoadLevel("tanks");}
+			if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*7,Screen.width/5,Screen.height/10),"1 Player",ButtonStyle)) {Settings.TwoPlayers = false; StartGame();}	
+			if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*9,Screen.width/5,Screen.height/10),"2 Players", ButtonStyle)) {Settings.TwoPlayers = true; StartGame();}
 		
 			if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*13,Screen.width/5,Screen.height/10),"Back", ButtonStyle)) StGame = false;
 		

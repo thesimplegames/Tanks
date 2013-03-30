@@ -3,11 +3,11 @@ using System.Collections;
 
 public class LevelCreator : MonoBehaviour {
 	
-	const int hor = 30;
-	const int ver = 50;
+	const int hor = 10;
+	const int ver = 10;
 	
 	public int [,] table = new int [hor, ver] 
-	/*{{8, 8, 8, 8, 8, 8, 8, 8, 8, 8}, 
+	{{8, 8, 8, 8, 8, 8, 8, 8, 8, 8}, 
 	 {8, 1, 2, 1, 1, 0, 0, 0, 4, 8}, 
 	 {8, 3, 0, 0, 1, 0, 1, 1, 0, 8}, 
 	 {8, 0, 1, 7, 1, 0, 1, 1, 0, 8},
@@ -16,7 +16,7 @@ public class LevelCreator : MonoBehaviour {
 	 {8, 0, 1, 1, 1, 1, 1, 0, 0, 8},
 	 {8, 0, 1, 1, 0, 0, 0, 2, 1, 8},
 	 {8, 0, 0, 6, 0, 1, 1, 1, 0, 8},
-	 {8, 8, 8, 8, 8, 8, 8, 8, 8, 8}}*/;
+	 {8, 8, 8, 8, 8, 8, 8, 8, 8, 8}};
 	
 	GameObject wall;
 	GameObject megaWall;
@@ -43,12 +43,12 @@ public class LevelCreator : MonoBehaviour {
 		nothing = Resources.Load("Prefabs/Nothing") as GameObject;
 		tank = Resources.Load("Prefabs/Tank") as GameObject;
 		
-		for (int i = 0; i < hor; i++)
+	/*	for (int i = 0; i < hor; i++)
 			for (int j = 0; j < ver; j++)
 				table[i ,j] = 0;
 		
 		table[0,0] = 8; table [29,49] = 8;
-		
+	*/	
 		Instantiate(nothing, new Vector3(0,0,8), nothing.transform.rotation);
 		
 		for (int i = 0; i < hor; i++)
