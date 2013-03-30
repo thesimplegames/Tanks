@@ -3,21 +3,9 @@ using System.Collections;
 
 public class LevelCreator : MonoBehaviour {
 	
-	const int hor = 10;
-	const int ver = 10;
+	int hor, ver;
 	
-	public int [,] table = new int [hor, ver] 
-	{{8, 8, 8, 8, 8, 8, 8, 8, 8, 8}, 
-	 {8, 1, 2, 1, 1, 0, 0, 0, 4, 8}, 
-	 {8, 3, 0, 0, 1, 0, 1, 1, 1, 8}, 
-	 {8, 0, 1, 7, 1, 0, 1, 1, 0, 8},
-	 {8, 0, 1, 1, 1, 0, 1, 0, 0, 8}, 
-	 {8, 0, 5, 0, 0, 0, 1, 0, 1, 8}, 
-	 {8, 0, 1, 1, 1, 1, 1, 0, 0, 8},
-	 {8, 0, 1, 1, 0, 0, 0, 2, 1, 8},
-	 {8, 0, 0, 6, 0, 1, 1, 1, 0, 8},
-	 {8, 8, 8, 8, 8, 8, 8, 8, 8, 8}};
-	
+	public int [,] table;
 	
 	GameObject wall;
 	GameObject megaWall;
@@ -31,7 +19,50 @@ public class LevelCreator : MonoBehaviour {
 	GameObject tankObject;
 	
 	// Use this for initialization
+	
+	int[,] LoadFromFile(string path, out int mWidth, out int mHeight) {
+		string strMap;
+		System.IO.StreamReader file = new System.IO.StreamReader(path);
+	    strMap = file.ReadLine();
+		file.Close();	
+		int[,] map;
+		
+		mWidth = 0;
+		mHeight = 0;
+		bool wh = true;
+		string sInt = "";
+		int mapPosition = 0;
+		
+		//	Loading map size
+		for (int i = 0; i < strMap.Length; i++) {
+			if (strMap[i] == ':') {
+				if (wh) {
+					wh = false;
+					mWidth = System.Convert.ToInt32(sInt);
+					sInt = "";
+				} else {
+					mHeight = System.Convert.ToInt32(sInt);
+					mapPosition = i + 1;
+					break;
+				}
+			} else {
+				sInt += strMap[i];
+			}			
+		}
+		
+		map = new int[mWidth, mHeight];
+		for (int i = 0; i < mWidth; i++) {
+			for (int j = 0; j < mWidth; j++) {
+				map[i, j] = System.Convert.ToInt32(strMap[mapPosition].ToString());
+				mapPosition++;
+			}
+		}	
+		return map;
+	}
+	
 	void Start () {
+		
+		table = LoadFromFile("map63.txt", out hor, out ver);
 			
 		Camera.main.transform.position = new Vector3 ((hor - 1) / 2f, (ver - 1) / 2f, -4);
 		Camera.main.orthographicSize = ver * 0.5f;

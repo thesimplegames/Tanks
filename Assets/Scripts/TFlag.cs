@@ -20,7 +20,7 @@ public class TFlag : MonoBehaviour {
 	void Update () {
 		
 		if (lives == 0) {
-			GameOver.IsGameOver = true;
+			GameOver.IsFlagOver = true;
 			Destroy (this.gameObject);
 		}
 	}
