@@ -9,10 +9,10 @@ public class LevelCreator : MonoBehaviour {
 	public int [,] table = new int [hor, ver] 
 	{{8, 8, 8, 8, 8, 8, 8, 8, 8, 8}, 
 	 {8, 1, 2, 1, 1, 0, 0, 0, 4, 8}, 
-	 {8, 3, 0, 0, 1, 0, 1, 1, 0, 8}, 
+	 {8, 3, 0, 0, 1, 0, 1, 1, 1, 8}, 
 	 {8, 0, 1, 7, 1, 0, 1, 1, 0, 8},
-	 {8, 0, 1, 1, 1, 0, 1, 5, 0, 8}, 
-	 {8, 0, 0, 0, 0, 0, 1, 0, 1, 8}, 
+	 {8, 0, 1, 1, 1, 0, 1, 0, 0, 8}, 
+	 {8, 0, 5, 0, 0, 0, 1, 0, 1, 8}, 
 	 {8, 0, 1, 1, 1, 1, 1, 0, 0, 8},
 	 {8, 0, 1, 1, 0, 0, 0, 2, 1, 8},
 	 {8, 0, 0, 6, 0, 1, 1, 1, 0, 8},
@@ -76,7 +76,7 @@ public class LevelCreator : MonoBehaviour {
 					case 7: 
 						if (Settings.TwoPlayers){
 							tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
-							tankObject.GetComponent<TTank>().type = 1;
+							tankObject.GetComponent<TTank>().type = 2;
 							tankObject.GetComponent<Handler>().SetKeyCodes(Settings.Player2);
 							tankObject.transform.tag = "Player2";
 							tankObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/SilverTank") as Texture;

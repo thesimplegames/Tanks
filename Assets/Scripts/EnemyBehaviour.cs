@@ -5,25 +5,36 @@ public class EnemyBehaviour : MonoBehaviour {
 	
 	Vector3 endObject;
 	private TTank tank;
+	GameObject player1, player2, eagle;
 	Vector2 direction;
 	int count;
 	RaycastHit hit;
 	Vector2 falseDirection;
 	bool up, down, left, right, isTank;
 	float upd, downd, leftd, rightd;
+	public bool player1Destroyed = false, player2Destroyed = false;
 	void Start () {
 		
 		tank = gameObject.GetComponent<TTank>();
 		tank.isMoving = false;
 		
-		if ((GameObject.FindGameObjectWithTag("Player1").transform.position - transform.position).magnitude < (GameObject.FindGameObjectWithTag("Player2").transform.position - transform.position).magnitude)
-			endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
+		player1 = GameObject.FindGameObjectWithTag("Player1");
+		player2 = GameObject.FindGameObjectWithTag("Player2");
+		eagle = GameObject.FindGameObjectWithTag("Eagle");
+		
+		if (player2 == null)
+			player2 = player1;
+		
+		if (GameObject.FindGameObjectWithTag("Player1") != null && GameObject.FindGameObjectWithTag("Player2") != null)
+			if ((GameObject.FindGameObjectWithTag("Player1").transform.position - transform.position).magnitude < (GameObject.FindGameObjectWithTag("Player2").transform.position - transform.position).magnitude)
+				endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
 		else endObject = GameObject.FindGameObjectWithTag("Player2").transform.position;
 		if (GameObject.FindGameObjectWithTag("Player1") == null)
-			endObject = GameObject.FindGameObjectWithTag("Player2").transform.position;
+			endObject = player2.transform.position;
 		if (GameObject.FindGameObjectWithTag("Player2") == null)
-			endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
-
+			endObject = player1.transform.position;
+		
+		
 		if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), 1)) 
 			right = false;
 		else right = true;
@@ -66,13 +77,36 @@ public class EnemyBehaviour : MonoBehaviour {
 	void Update () {
 		if (Time.time > 0.1f) {
 			
-			if (GameObject.FindGameObjectWithTag("Player1") == null)
-				endObject = GameObject.FindGameObjectWithTag("Player2").transform.position;
-			else if (GameObject.FindGameObjectWithTag("Player2") == null)
-				endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
-			else if ((GameObject.FindGameObjectWithTag("Player1").transform.position - transform.position).magnitude < (GameObject.FindGameObjectWithTag("Player2").transform.position - transform.position).magnitude)
-				endObject = GameObject.FindGameObjectWithTag("Player1").transform.position;
-			else endObject = GameObject.FindGameObjectWithTag("Player2").transform.position;
+			Debug.Log(player1Destroyed);
+			
+			if (!Settings.TwoPlayers) {
+				player2Destroyed = true;
+				if (!player1Destroyed) 
+					if ((player1.transform.position - transform.position).magnitude < (eagle.transform.position - transform.position).magnitude)
+						endObject = player1.transform.position;
+					else endObject = eagle.transform.position;
+				else endObject = eagle.transform.position;
+			}
+			
+			if (Settings.TwoPlayers) {
+				if (!player1Destroyed && !player2Destroyed) {
+					if ((player1.transform.position - transform.position).magnitude < (eagle.transform.position - transform.position).magnitude)
+						endObject = player1.transform.position;
+					else endObject = eagle.transform.position;
+					if ((player2.transform.position - transform.position).magnitude < (endObject - transform.position).magnitude)
+						endObject = player2.transform.position;
+				}
+				if (!player1Destroyed && player2Destroyed)
+					if ((player1.transform.position - transform.position).magnitude < (eagle.transform.position - transform.position).magnitude)
+						endObject = player1.transform.position;
+					else endObject = eagle.transform.position;
+				if (!player2Destroyed && player1Destroyed)
+					if ((player2.transform.position - transform.position).magnitude < (eagle.transform.position - transform.position).magnitude)
+						endObject = player2.transform.position;
+					else endObject = eagle.transform.position;
+				if (player1Destroyed && player2Destroyed)
+					endObject = eagle.transform.position;
+			}
 			
 			if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), 1)) 
 				right = false;
@@ -92,31 +126,81 @@ public class EnemyBehaviour : MonoBehaviour {
 				
 				isTank = false;
 				
-				if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), out hit, 100) && (hit.transform.tag == "Player1" || hit.transform.tag == "Player2")) {
+				if (!player1Destroyed) {
+				
+					if (player1.transform.position.x > transform.position.x && player1.transform.position.y == transform.position.y) {
+						isTank = true;
+						transform.eulerAngles = new Vector3 (90,270,90);
+						transform.GetComponent<TTank>().direction = Vector2.right;
+					}	
+					if (player1.transform.position.x < transform.position.x && player1.transform.position.y == transform.position.y) {
+						isTank = true;
+						transform.eulerAngles = new Vector3 (270,270,90);
+						transform.GetComponent<TTank>().direction = -Vector2.right;
+					}	
+					if (player1.transform.position.x == transform.position.x && player1.transform.position.y > transform.position.y) {
+						isTank = true;
+						transform.eulerAngles = new Vector3 (180,270,90);
+						transform.GetComponent<TTank>().direction = Vector2.up;
+					}	
+					if (player1.transform.position.x == transform.position.x && player1.transform.position.y < transform.position.y) {
+						isTank = true;
+						transform.eulerAngles = new Vector3 (0,270,90);
+						transform.GetComponent<TTank>().direction = -Vector2.up;
+					}
+				
+				}
+				
+				if (!player2Destroyed) {
+				
+					if (player2.transform.position.x > transform.position.x && player2.transform.position.y == transform.position.y) {
+						isTank = true;
+						transform.eulerAngles = new Vector3 (90,270,90);
+						transform.GetComponent<TTank>().direction = Vector2.right;
+					}	
+					if (player2.transform.position.x < transform.position.x && player2.transform.position.y == transform.position.y) {
+						isTank = true;
+						transform.eulerAngles = new Vector3 (270,270,90);
+						transform.GetComponent<TTank>().direction = -Vector2.right;
+					}	
+					if (player2.transform.position.x == transform.position.x && player2.transform.position.y > transform.position.y) {
+						isTank = true;
+						transform.eulerAngles = new Vector3 (180,270,90);
+						transform.GetComponent<TTank>().direction = Vector2.up;
+					}	
+					if (player2.transform.position.x == transform.position.x && player2.transform.position.y < transform.position.y) {
+						isTank = true;
+						transform.eulerAngles = new Vector3 (0,270,90);
+						transform.GetComponent<TTank>().direction = -Vector2.up;
+					}
+				
+				}
+					
+				if (eagle.transform.position.x > transform.position.x && eagle.transform.position.y == transform.position.y) {
 					isTank = true;
 					transform.eulerAngles = new Vector3 (90,270,90);
 					transform.GetComponent<TTank>().direction = Vector2.right;
-				}
-				if (Physics.Raycast(new Ray(transform.position, new Vector2(0, 1)), out hit, 100) && (hit.transform.tag == "Player1" || hit.transform.tag == "Player2")) {
-					isTank = true; 
-					transform.eulerAngles = new Vector3 (180,270,90);
-					transform.GetComponent<TTank>().direction = Vector2.up;
-				}
-				if (Physics.Raycast(new Ray(transform.position, new Vector2(-1, 0)), out hit, 100) && (hit.transform.tag == "Player1" || hit.transform.tag == "Player2")) {
-					isTank = true; 
+				}	
+				if (eagle.transform.position.x < transform.position.x && eagle.transform.position.y == transform.position.y) {
+					isTank = true;
 					transform.eulerAngles = new Vector3 (270,270,90);
 					transform.GetComponent<TTank>().direction = -Vector2.right;
-				}
-				if (Physics.Raycast(new Ray(transform.position, new Vector2(0, -1)), out hit, 100) && (hit.transform.tag == "Player1" || hit.transform.tag == "Player2")) {
+				}	
+				if (eagle.transform.position.x == transform.position.x && eagle.transform.position.y > transform.position.y) {
+					isTank = true;
+					transform.eulerAngles = new Vector3 (180,270,90);
+					transform.GetComponent<TTank>().direction = Vector2.up;
+				}	
+				if (eagle.transform.position.x == transform.position.x && eagle.transform.position.y < transform.position.y) {
 					isTank = true;
 					transform.eulerAngles = new Vector3 (0,270,90);
 					transform.GetComponent<TTank>().direction = -Vector2.up;
-				}
-				
-				if (isTank) tank.Move(transform.GetComponent<TTank>().direction);
+				}	
 				
 			}
 			
+			if (!tank.isMoving)
+				if (isTank) tank.Move(transform.GetComponent<TTank>().direction);
 			
 			if (isTank && (int)(Time.time / 2f) == Mathf.Round(Time.time / 2f))
 				tank.Shoot();

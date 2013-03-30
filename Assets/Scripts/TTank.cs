@@ -27,6 +27,10 @@ public class TTank : MonoBehaviour {
 			gameObject.GetComponent<EnemyBehaviour>().enabled = true;
 			gameObject.GetComponent<Handler>().enabled = false;
 		}
+		if (type == 1)
+			GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyBehaviour>().player1Destroyed = false;
+		if (type == 2)
+			GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyBehaviour>().player2Destroyed = false;
 		spawnPosition=transform.position;
 	}
 	
@@ -74,7 +78,15 @@ public class TTank : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(life==0) Destroy(gameObject);
+		if(life<=0) {
+			if (type == 1)
+				if (GameObject.FindGameObjectWithTag("Enemy") != null)
+					GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyBehaviour>().player1Destroyed = true;
+			if (type == 2)
+				if (GameObject.FindGameObjectWithTag("Enemy") != null)
+					GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyBehaviour>().player2Destroyed = true;	
+			Destroy(gameObject);
+		}
 		if (isMoving){
 			
 			transform.position=new Vector3 (transform.position.x+direction.x*speed*Time.deltaTime,
