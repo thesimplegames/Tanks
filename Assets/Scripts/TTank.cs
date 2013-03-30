@@ -4,16 +4,16 @@ using System.Collections;
 public class TTank : MonoBehaviour {
 	
 	public float speed;
-	public float speedMod;
-	public float shield;
-	public int life;
 	public int type;
 	public bool isMoving;
 	public Vector3 spawnPosition;
 	private Vector3 targetPosition;
 	public Vector2 direction;
 	public float deltaStep;
-	private GameObject bullet;
+	private GameObject bullet,bullet2;
+	private float speedMod;
+	private float shield;
+	private int life;
 	
 	// Use this for initialization
 	void Start () {
@@ -45,6 +45,24 @@ public class TTank : MonoBehaviour {
 		}
 	}	
 	
+	public void AddPowerUp(TPowerUp.PowerUpType type){
+		switch (type) {
+		case TPowerUp.PowerUpType.BulletUp:
+			bulletlvl++;
+		break;
+		case TPowerUp.PowerUpType.Shield:
+			shield=5f;
+		break;
+		case TPowerUp.PowerUpType.TankLife:
+			life++;
+		break;
+		case TPowerUp.PowerUpType.TankSpeedUp:
+			speedMod=5f;
+		break;
+		case TPowerUp.PowerUpType.Bomb:
+		break;	
+		}
+	}
 	public bool CanMove(Vector2 direction_){
 		if (gameObject.tag!="Enemy")
 		Debug.Log (direction_);

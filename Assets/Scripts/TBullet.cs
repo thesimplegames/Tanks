@@ -5,12 +5,12 @@ public class TBullet : MonoBehaviour {
 	
 	public Vector2 direction;
 	public GameObject parent;
-	float speed;
+	public float speed;
 	//float speedMod;
 	
 	// Use this for initialization
 	void Start () {
-		speed=5f;
+		
 	//	speedMod=0;
 	}
 	
@@ -24,6 +24,8 @@ public class TBullet : MonoBehaviour {
 				break;
 			case "Bush": 
 				break;	
+			case "PowerUp": 
+				break;	
 			case "Player1":
 				col.gameObject.GetComponent<TTank>().Shooted();
 				Destroy(this.gameObject);
@@ -35,11 +37,7 @@ public class TBullet : MonoBehaviour {
 			case "Enemy":
 				col.gameObject.GetComponent<TTank>().Shooted();
 				Destroy(this.gameObject);
-				break;	
-			case "Eagle":
-				col.gameObject.GetComponent<TFlag>().Shooted();
-				Destroy (this.gameObject);
-				break;
+				break;		
 			default:			
 				Destroy(col.gameObject);
 				Destroy(this.gameObject);

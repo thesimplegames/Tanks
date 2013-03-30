@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\GameOver.cs" />
      <Compile Include="Assets\Scripts\Handler.cs" />
      <Compile Include="Assets\Scripts\LevelCreator.cs" />
+     <Compile Include="Assets\Scripts\MapPrefs.cs" />
      <Compile Include="Assets\Scripts\Menu.cs" />
      <Compile Include="Assets\Scripts\Settings.cs" />
      <Compile Include="Assets\Scripts\TBullet.cs" />
