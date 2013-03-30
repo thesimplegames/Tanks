@@ -6,8 +6,8 @@ public class GameGUI : MonoBehaviour {
 	public GUIStyle TextStyle;
 	public GUIStyle LifesStyle;
 	
-	public GameObject Player1;
-	public GameObject Player2;
+	public static GameObject Player1;
+	public static GameObject Player2;
 	
 	public int P1;
 	public int P2;
@@ -23,7 +23,7 @@ public class GameGUI : MonoBehaviour {
 		
 		int X,Y;
 		int j,k;
-		for (i=0; i<P1; i++)
+		for (i=0; i<Player1.GetComponent<TTank>().life; i++)
 		{
 			j = i / 3;
 			k = i % 3;
@@ -35,7 +35,7 @@ public class GameGUI : MonoBehaviour {
 		if (Settings.TwoPlayers) {
 			GUI.Box(new Rect(Screen.width/16*13, Screen.height/16, Screen.width/16, Screen.height/16), "Player 2", TextStyle);
 
-			for (i=0; i<P2; i++)
+			for (i=0; i<Player2.GetComponent<TTank>().life; i++)
 			{
 				j = i / 3;
 				k = i % 3;
