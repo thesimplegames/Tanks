@@ -18,6 +18,7 @@ public class LevelCreator : MonoBehaviour {
 	 {8, 0, 0, 6, 0, 1, 1, 1, 0, 8},
 	 {8, 8, 8, 8, 8, 8, 8, 8, 8, 8}};
 	
+	
 	GameObject wall;
 	GameObject megaWall;
 	GameObject water;
@@ -71,7 +72,7 @@ public class LevelCreator : MonoBehaviour {
 						tankObject.GetComponent<TTank>().type = 1;
 						tankObject.GetComponent<Handler>().SetKeyCodes(Settings.Player1);
 						tankObject.transform.tag = "Player1";
-						
+						GameGUI.Player1 = tankObject;
 						break;
 					case 7: 
 						if (Settings.TwoPlayers){
@@ -80,6 +81,7 @@ public class LevelCreator : MonoBehaviour {
 							tankObject.GetComponent<Handler>().SetKeyCodes(Settings.Player2);
 							tankObject.transform.tag = "Player2";
 							tankObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/SilverTank") as Texture;
+							GameGUI.Player2 = tankObject;
 						}
 						break;
 					case 8: 

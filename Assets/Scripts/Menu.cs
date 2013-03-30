@@ -125,7 +125,7 @@ public class Menu : MonoBehaviour {
 	
 	void OnGUI () {
 		
-		GUI.Box(new Rect(1, 1, Screen.width, Screen.height), "", Fon);
+		//GUI.Box(new Rect(1, 1, Screen.width, Screen.height), "", Fon);
 		
 		TextStyle.fontSize = Screen.height/15;
 		ButtonStyle.fontSize = Screen.height/30; 
