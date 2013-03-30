@@ -7,6 +7,7 @@ public class LevelCreator : MonoBehaviour {
 	
 	public int [,] table;
 	
+	
 	GameObject wall;
 	GameObject megaWall;
 	GameObject water;
