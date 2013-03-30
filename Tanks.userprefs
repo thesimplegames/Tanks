@@ -7,9 +7,8 @@
       <File FileName="Assets\Scripts\Menu.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\LevelCreator.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\TBullet.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\TTank.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GameOver.cs" Line="21" Column="27" />
-      <File FileName="Assets\Scripts\ifDestroyed.cs" Line="15" Column="2" />
+      <File FileName="Assets\Scripts\ifDestroyed.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -38,18 +38,18 @@ public class EnemyBehaviour : MonoBehaviour {
 			endObject = player1.transform.position;
 		
 		
-		if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), 1)) 
-			right = false;
-		else right = true;
-		if (Physics.Raycast(new Ray(transform.position, new Vector2(0, 1)), 1)) 
-			up = false;
-		else up = true;
-		if (Physics.Raycast(new Ray(transform.position, new Vector2(-1, 0)), 1)) 
-			left = false;
-		else left = true;
-		if (Physics.Raycast(new Ray(transform.position, new Vector2(0, -1)), 1)) 
-			down = false;
-		else down = true;
+		if (gameObject.GetComponent<TTank>().CanMove(Vector2.right)) 
+			right = true;
+		else right = false;
+		if (gameObject.GetComponent<TTank>().CanMove(Vector2.up)) 
+			up = true;
+		else up = false;
+		if (gameObject.GetComponent<TTank>().CanMove(-Vector2.right)) 
+			left = true;
+		else left = false;
+		if (gameObject.GetComponent<TTank>().CanMove(-Vector2.up)) 
+			down = true;
+		else down = false;
 		
 		if (right)
 			rightd = (endObject - new Vector3 (transform.position.x + 1, transform.position.y, transform.position.z)).magnitude;
@@ -113,18 +113,18 @@ public class EnemyBehaviour : MonoBehaviour {
 					endObject = eagle.transform.position;
 			}
 			
-			if (Physics.Raycast(new Ray(transform.position, new Vector2(1, 0)), 1)) 
-				right = false;
-			else right = true;
-			if (Physics.Raycast(new Ray(transform.position, new Vector2(0, 1)), 1)) 
-				up = false; 
-			else up = true;
-			if (Physics.Raycast(new Ray(transform.position, new Vector2(-1, 0)), 1)) 
-				left = false; 
-			else left = true;
-			if (Physics.Raycast(new Ray(transform.position, new Vector2(0, -1)), 1)) 
-				down = false;
-			else down = true;
+			if (gameObject.GetComponent<TTank>().CanMove(Vector2.right)) 
+				right = true;
+			else right = false;
+			if (gameObject.GetComponent<TTank>().CanMove(Vector2.up)) 
+				up = true;
+			else up = false;
+			if (gameObject.GetComponent<TTank>().CanMove(-Vector2.right)) 
+				left = true;
+			else left = false;
+			if (gameObject.GetComponent<TTank>().CanMove(-Vector2.up)) 
+				down = true;
+			else down = false;
 			
 			
 			if (!tank.isMoving) {
