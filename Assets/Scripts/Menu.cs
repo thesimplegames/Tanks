@@ -11,6 +11,7 @@ public class Menu : MonoBehaviour {
 	public GUIStyle ButtonInputStyle;
 	public GUIStyle PressAnyKey;
 	public GUIStyle ButtonMinus;
+	public GUIStyle Fon;
 	
 	bool MySettings = false;
 	bool GameSettings = false;
@@ -104,7 +105,27 @@ public class Menu : MonoBehaviour {
 		Application.LoadLevel("tanks");	
 	}
 	
+	bool CanChange() {
+		if (Ev.keyCode==KeyCode.Escape) return false;
+		
+		if (Ev.keyCode==Player1Up) return false;
+		if (Ev.keyCode==Player1Down) return false;
+		if (Ev.keyCode==Player1Left) return false;
+		if (Ev.keyCode==Player1Right) return false;
+		if (Ev.keyCode==Player1Shoot) return false;
+		
+		if (Ev.keyCode==Player2Up) return false;
+		if (Ev.keyCode==Player2Down) return false;
+		if (Ev.keyCode==Player2Left) return false;
+		if (Ev.keyCode==Player2Right) return false;
+		if (Ev.keyCode==Player2Shoot) return false;
+		
+		return true;
+	}
+	
 	void OnGUI () {
+		
+		GUI.Box(new Rect(1, 1, Screen.width, Screen.height), "", Fon);
 		
 		TextStyle.fontSize = Screen.height/15;
 		ButtonStyle.fontSize = Screen.height/30; 
@@ -237,17 +258,17 @@ public class Menu : MonoBehaviour {
 				if (GUI.Button (new Rect (Screen.width/16*10, Screen.height/16*10, Screen.width/16*5, Screen.height/16), "", ButtonInputStyle))	 {NullConttrolsChange();Player2RightInput = true;}
 				if (GUI.Button (new Rect (Screen.width/16*10, Screen.height/16*11, Screen.width/16*5, Screen.height/16), "", ButtonInputStyle))	 {NullConttrolsChange();Player2ShootInput = true;}
 			
-				if ((Ev.isKey)&&(Player1UpInput)) if (Ev.keyCode!=KeyCode.Escape){Player1Up = Ev.keyCode; Player1UpInput = false;} else Player1UpInput = false;
-				if ((Ev.isKey)&&(Player1DownInput)) if (Ev.keyCode!=KeyCode.Escape){Player1Down = Ev.keyCode; Player1DownInput = false;}else Player1DownInput = false;
-				if ((Ev.isKey)&&(Player1LeftInput)) if (Ev.keyCode!=KeyCode.Escape){Player1Left = Ev.keyCode; Player1LeftInput = false;}else Player1LeftInput = false;
-				if ((Ev.isKey)&&(Player1RightInput)) if (Ev.keyCode!=KeyCode.Escape){Player1Right = Ev.keyCode; Player1RightInput = false;}else Player1RightInput = false;
-				if ((Ev.isKey)&&(Player1ShootInput)) if (Ev.keyCode!=KeyCode.Escape){Player1Shoot = Ev.keyCode; Player1ShootInput = false;}else Player1ShootInput = false;
+				if ((Ev.isKey)&&(Player1UpInput)) if (CanChange()){Player1Up = Ev.keyCode; Player1UpInput = false;} else Player1UpInput = false;
+				if ((Ev.isKey)&&(Player1DownInput)) if (CanChange()){Player1Down = Ev.keyCode; Player1DownInput = false;}else Player1DownInput = false;
+				if ((Ev.isKey)&&(Player1LeftInput)) if (CanChange()){Player1Left = Ev.keyCode; Player1LeftInput = false;}else Player1LeftInput = false;
+				if ((Ev.isKey)&&(Player1RightInput)) if (CanChange()){Player1Right = Ev.keyCode; Player1RightInput = false;}else Player1RightInput = false;
+				if ((Ev.isKey)&&(Player1ShootInput)) if (CanChange()){Player1Shoot = Ev.keyCode; Player1ShootInput = false;}else Player1ShootInput = false;
 			
-				if ((Ev.isKey)&&(Player2UpInput)) if (Ev.keyCode!=KeyCode.Escape){Player2Up = Ev.keyCode; Player2UpInput = false;} else Player2UpInput = false;
-				if ((Ev.isKey)&&(Player2DownInput)) if (Ev.keyCode!=KeyCode.Escape){Player2Down = Ev.keyCode; Player2DownInput = false;}else Player2DownInput = false;
-				if ((Ev.isKey)&&(Player2LeftInput)) if (Ev.keyCode!=KeyCode.Escape){Player2Left = Ev.keyCode; Player2LeftInput = false;}else Player2LeftInput = false;
-				if ((Ev.isKey)&&(Player2RightInput))if (Ev.keyCode!=KeyCode.Escape) {Player2Right = Ev.keyCode; Player2RightInput = false;}else Player2RightInput = false;
-				if ((Ev.isKey)&&(Player2ShootInput)) if (Ev.keyCode!=KeyCode.Escape){Player2Shoot = Ev.keyCode; Player2ShootInput = false;}else Player2ShootInput = false;
+				if ((Ev.isKey)&&(Player2UpInput)) if (CanChange()){Player2Up = Ev.keyCode; Player2UpInput = false;} else Player2UpInput = false;
+				if ((Ev.isKey)&&(Player2DownInput)) if (CanChange()){Player2Down = Ev.keyCode; Player2DownInput = false;}else Player2DownInput = false;
+				if ((Ev.isKey)&&(Player2LeftInput)) if (CanChange()){Player2Left = Ev.keyCode; Player2LeftInput = false;}else Player2LeftInput = false;
+				if ((Ev.isKey)&&(Player2RightInput))if (CanChange()) {Player2Right = Ev.keyCode; Player2RightInput = false;}else Player2RightInput = false;
+				if ((Ev.isKey)&&(Player2ShootInput)) if (CanChange()){Player2Shoot = Ev.keyCode; Player2ShootInput = false;}else Player2ShootInput = false;
 			
 				if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*13,Screen.width/5,Screen.height/10),"Back", ButtonStyle)) HandleSettings = false;
 		}
