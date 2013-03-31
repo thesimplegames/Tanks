@@ -7,13 +7,15 @@ public class TTank : MonoBehaviour {
 	public int type;
 	public bool isMoving;
 	public Vector3 spawnPosition;
-	private Vector3 targetPosition;
+	public int life;
 	public Vector2 direction;
 	public float deltaStep;
+	
 	private GameObject bullet,bullet2;
 	private float speedMod;
+	private Vector3 targetPosition;
 	private float shield;
-	private int life;
+	private float bulletlvl;
 	
 	// Use this for initialization
 	void Start () {
@@ -21,6 +23,7 @@ public class TTank : MonoBehaviour {
 		speedMod = 0;
 		shield = 0;
 		deltaStep=4;
+		bulletlvl=1f;
 		if (type != 0) life = Settings.tankHP;
 		else life = Settings.enemyHP;
 		isMoving = false;
@@ -38,10 +41,13 @@ public class TTank : MonoBehaviour {
 	
 	public void Shooted(){
 //		Debug.Log(tag+life.ToString());
-		if (shield>0) shield=0;
-			else {
+		if (shield<=0){
 		life--;	
-	//	transform.position=spawnPosition;
+		transform.position=spawnPosition;
+			speedMod=0f;
+			shield=3f;
+			bulletlvl=1f;
+			
 		}
 	}	
 	
@@ -64,36 +70,26 @@ public class TTank : MonoBehaviour {
 		}
 	}
 	public bool CanMove(Vector2 direction_){
-		if (gameObject.tag!="Enemy")
-		Debug.Log (direction_);
 		float rayLength=0.55f;
 		Ray ray = new Ray (transform.position, new Vector3(direction_.x, direction_.y, transform.position.z));
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, rayLength)) {
-			
-		
-		if (gameObject.tag!="Enemy")Debug.Log (1);
-			return false;
+			if (!(hit.transform.gameObject.tag=="PowerUp"))
+				return false;
 		}	
 		ray = new Ray (new Vector3(transform.position.x+direction_.y/4,transform.position.y+direction_.x/4,transform.position.z),
 						new Vector3(direction_.x, direction_.y, transform.position.z));
 		if (Physics.Raycast(ray, out hit, rayLength)) {
-			
-		
-		if (gameObject.tag!="Enemy")Debug.Log (2);
-			return false;
+			if (!(hit.transform.gameObject.tag=="PowerUp"))
+				return false;
 		}	
 		
 		ray = new Ray (new Vector3(transform.position.x-direction_.y/4,transform.position.y-direction_.x/4,transform.position.z),
 						new Vector3(direction_.x, direction_.y, transform.position.z));
 		if (Physics.Raycast(ray, out hit, rayLength)) {
-			
-		
-		if (gameObject.tag!="Enemy")Debug.Log (3);
-			return false;
+			if (!(hit.transform.gameObject.tag=="PowerUp"))
+				return false;
 		}	
-		
-		if (gameObject.tag!="Enemy")Debug.Log (true);
 		return true;
 	}
 	
@@ -116,18 +112,32 @@ public class TTank : MonoBehaviour {
 				
 	}
 	public void Shoot(){
+			//GameObject pu = Instantiate(Resources.Load("Prefabs/PowerUp")) as GameObject;
+			//GameObject pu = GameObject.FindGameObjectWithTag("PowerUp");
+			//pu.GetComponent<TPowerUp>().CreatePowerUp();
 		if (bullet == null){
 			bullet = Instantiate(Resources.Load("Prefabs/Bullet")) as GameObject;
 			TBullet myBullet = bullet.GetComponent<TBullet>();
 			myBullet.direction = direction;
+			myBullet.speed=(bulletlvl/2+1)*10f;
 			myBullet.parent=gameObject;
 			bullet.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.3f);
 			bullet.transform.rotation = transform.rotation;
-		}			
+		}	else if (bullet2==null) if (bulletlvl>2) {
+			bullet2 = Instantiate(Resources.Load("Prefabs/Bullet")) as GameObject;
+			TBullet myBullet = bullet2.GetComponent<TBullet>();
+			myBullet.direction = direction;
+			myBullet.speed=(bulletlvl/2+1)*10f;
+			myBullet.parent=gameObject;
+			bullet2.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.3f);
+			bullet2.transform.rotation = transform.rotation;
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		shield-=Time.deltaTime;
+		speedMod-=Time.deltaTime;
 		if(life==0) {
 			if (type == 1)
 				GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player1Destroyed = true;
@@ -137,8 +147,8 @@ public class TTank : MonoBehaviour {
 		}
 		if (isMoving) {
 			isMoving=CanMove(direction);
-			transform.position=new Vector3 (transform.position.x+direction.x*speed*Time.deltaTime,
-											transform.position.y+direction.y*speed*Time.deltaTime,
+			transform.position=new Vector3 (transform.position.x+direction.x*speed*Time.deltaTime*(speedMod>0?2:1),
+											transform.position.y+direction.y*speed*Time.deltaTime*(speedMod>0?2:1),
 											transform.position.z);
 			if (Vector3.Distance(transform.position,targetPosition)<0.05f) {
 				isMoving=false;

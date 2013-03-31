@@ -17,14 +17,13 @@ public class TPowerUp : MonoBehaviour {
 		while (!found){
 			x=(int)Random.Range(1,MapPrefs.heigth-1);
 			y=(int)Random.Range(1,MapPrefs.length-1);
+			Debug.Log (x.ToString()+" "+y.ToString());
 			found=true;
-			Debug.Log("x: " + x.ToString() + ", y: " + y.ToString());
 			Ray ray = new Ray (new Vector3(x,y,-1), Vector3.forward);
 			RaycastHit hit;
 			if (Physics.Raycast(ray, out hit, 3)) {
 				found=false;
 			}
-			found=true;
 		}
 		type = (PowerUpType)Random.Range(9,14); 
 		transform.position=new Vector3 (x,y,0);
@@ -47,23 +46,4 @@ public class TPowerUp : MonoBehaviour {
 	void Update () {
 	
 	}
-	/*
-	public void AddPowerUp(TPowerUp.PowerUpType type){
-		switch (type) {
-		case TPowerUp.PowerUpType.BulletUp:
-			bulletlvl++;
-		break;
-		case TPowerUp.PowerUpType.Shield:
-			shield=5f;
-		break;
-		case TPowerUp.PowerUpType.TankLife:
-			life++;
-		break;
-		case TPowerUp.PowerUpType.TankSpeedUp:
-			speedMod=5f;
-		break;
-		case TPowerUp.PowerUpType.Bomb:
-		break;	
-		}
-	}*/
 }

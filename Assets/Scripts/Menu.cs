@@ -98,10 +98,6 @@ public class Menu : MonoBehaviour {
 		Settings.tankHP = PlayerLife;
 		Settings.enemyHP = EnemyLife;
 		Settings.eagleHP = FlagLife;
-		
-		Debug.Log(PlayerLife);
-		
-		
 		Application.LoadLevel("tanks");	
 	}
 	

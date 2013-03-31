@@ -2,16 +2,16 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\TTank.cs">
     <Files>
-      <File FileName="Assets\Scripts\TTank.cs" Line="16" Column="9" />
-      <File FileName="Assets\Scripts\EnemyBehaviour.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameGUI.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\TTank.cs" Line="117" Column="6" />
+      <File FileName="Assets\Scripts\TPowerUp.cs" Line="20" Column="44" />
+      <File FileName="Assets\Scripts\EnemyBehaviour.cs" Line="24" Column="3" />
       <File FileName="Assets\Scripts\TFlag.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Menu.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Menu.cs" Line="101" Column="3" />
       <File FileName="Assets\Scripts\LevelCreator.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\TBullet.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GameOver.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\ifDestroyed.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GameGUI.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\TPowerUp.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
