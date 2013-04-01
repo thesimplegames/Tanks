@@ -55,6 +55,7 @@ public class TTank : MonoBehaviour {
 		switch (type) {
 		case TPowerUp.PowerUpType.BulletUp:
 			bulletlvl++;
+			if (bulletlvl>3f) bulletlvl=3f;
 		break;
 		case TPowerUp.PowerUpType.Shield:
 			shield=5f;
@@ -76,19 +77,25 @@ public class TTank : MonoBehaviour {
 		if (Physics.Raycast(ray, out hit, rayLength)) {
 			if (!(hit.transform.gameObject.tag=="PowerUp"))
 				return false;
+			else { AddPowerUp(hit.transform.gameObject.GetComponent<TPowerUp>().type);
+				Destroy(hit.transform.gameObject); }
 		}	
-		ray = new Ray (new Vector3(transform.position.x+direction_.y/4,transform.position.y+direction_.x/4,transform.position.z),
+		ray = new Ray (new Vector3(transform.position.x+direction_.y*7/16,transform.position.y+direction_.x*7/16,transform.position.z),
 						new Vector3(direction_.x, direction_.y, transform.position.z));
 		if (Physics.Raycast(ray, out hit, rayLength)) {
 			if (!(hit.transform.gameObject.tag=="PowerUp"))
 				return false;
+			else { AddPowerUp(hit.transform.gameObject.GetComponent<TPowerUp>().type);
+				Destroy(hit.transform.gameObject); }
 		}	
 		
-		ray = new Ray (new Vector3(transform.position.x-direction_.y/4,transform.position.y-direction_.x/4,transform.position.z),
+		ray = new Ray (new Vector3(transform.position.x-direction_.y*7/16,transform.position.y-direction_.x*7/16,transform.position.z),
 						new Vector3(direction_.x, direction_.y, transform.position.z));
 		if (Physics.Raycast(ray, out hit, rayLength)) {
 			if (!(hit.transform.gameObject.tag=="PowerUp"))
 				return false;
+			else { AddPowerUp(hit.transform.gameObject.GetComponent<TPowerUp>().type);
+				Destroy(hit.transform.gameObject); }
 		}	
 		return true;
 	}
@@ -112,9 +119,10 @@ public class TTank : MonoBehaviour {
 				
 	}
 	public void Shoot(){
-			//GameObject pu = Instantiate(Resources.Load("Prefabs/PowerUp")) as GameObject;
+			GameObject pu = Instantiate(Resources.Load("Prefabs/PowerUp")) as GameObject;
 			//GameObject pu = GameObject.FindGameObjectWithTag("PowerUp");
-			//pu.GetComponent<TPowerUp>().CreatePowerUp();
+			pu.GetComponent<TPowerUp>().CreatePowerUp();
+			//pu.transform.position= new Vector3 (2,2,-1);
 		if (bullet == null){
 			bullet = Instantiate(Resources.Load("Prefabs/Bullet")) as GameObject;
 			TBullet myBullet = bullet.GetComponent<TBullet>();
