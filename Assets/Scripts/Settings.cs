@@ -9,5 +9,6 @@ public class Settings : MonoBehaviour {
 	public static int enemyHP;
 	public static int eagleHP;
 	public static bool TwoPlayers;
+	public static string levelName;
 	
 }
