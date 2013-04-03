@@ -205,7 +205,12 @@ public class EnemyBehaviour : MonoBehaviour {
 			}
 			
 			if (!tank.isMoving)
-				if (isTank) tank.Move(transform.GetComponent<TTank>().direction);
+				if (isTank) {
+					tank.Move(transform.GetComponent<TTank>().direction);
+					tank.Move(transform.GetComponent<TTank>().direction);
+					tank.Move(transform.GetComponent<TTank>().direction);
+					tank.Move(transform.GetComponent<TTank>().direction);
+				}
 			
 			if (isTank && (int)(Time.time / 2f) == Mathf.Round(Time.time / 2f))
 				tank.Shoot();
@@ -263,6 +268,10 @@ public class EnemyBehaviour : MonoBehaviour {
 					}
 				
 				tank.Move(direction);
+				tank.Move(direction);
+				tank.Move(direction);
+				tank.Move(direction);
+				
 			}
 		}	
 	}

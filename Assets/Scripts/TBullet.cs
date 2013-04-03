@@ -26,6 +26,10 @@ public class TBullet : MonoBehaviour {
 				break;	
 			case "PowerUp": 
 				break;	
+			case "Eagle" :
+				col.gameObject.GetComponent<TFlag>().Shooted();
+				Destroy(gameObject);
+				break;
 			case "Player1":
 				col.gameObject.GetComponent<TTank>().Shooted();
 				Destroy(this.gameObject);

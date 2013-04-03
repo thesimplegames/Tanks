@@ -7,7 +7,7 @@ public class TFlag : MonoBehaviour {
 	
 	public void Shooted () {
 		
-		lives--;
+		//lives--;
 		
 	}
 	

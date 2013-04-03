@@ -47,7 +47,10 @@ public class TTank : MonoBehaviour {
 			speedMod=0f;
 			shield=3f;
 			bulletlvl=1f;
-			
+			if (gameObject.tag=="Enemy") if (Random.value<MapPrefs.powerUpChanse) {
+				GameObject pu = Instantiate(Resources.Load("Prefabs/PowerUp")) as GameObject;
+				pu.GetComponent<TPowerUp>().CreatePowerUp();
+			}
 		}
 	}	
 	
@@ -72,12 +75,16 @@ public class TTank : MonoBehaviour {
 	}
 	public bool CanMove(Vector2 direction_){
 		float rayLength=0.55f;
+		GameObject hitedPU1=null,hitedPU2=null;
+		
 		Ray ray = new Ray (transform.position, new Vector3(direction_.x, direction_.y, transform.position.z));
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, rayLength)) {
 			if (!(hit.transform.gameObject.tag=="PowerUp"))
 				return false;
-			else { AddPowerUp(hit.transform.gameObject.GetComponent<TPowerUp>().type);
+			else if (gameObject.tag!="Enemy") { 
+				AddPowerUp(hit.transform.gameObject.GetComponent<TPowerUp>().type);
+				hitedPU1=hit.transform.gameObject;
 				Destroy(hit.transform.gameObject); }
 		}	
 		ray = new Ray (new Vector3(transform.position.x+direction_.y*7/16,transform.position.y+direction_.x*7/16,transform.position.z),
@@ -85,8 +92,11 @@ public class TTank : MonoBehaviour {
 		if (Physics.Raycast(ray, out hit, rayLength)) {
 			if (!(hit.transform.gameObject.tag=="PowerUp"))
 				return false;
-			else { AddPowerUp(hit.transform.gameObject.GetComponent<TPowerUp>().type);
-				Destroy(hit.transform.gameObject); }
+			else if (gameObject.tag!="Enemy") if (hit.transform.gameObject!=hitedPU1){ 
+					AddPowerUp(hit.transform.gameObject.GetComponent<TPowerUp>().type);
+					Destroy(hit.transform.gameObject); 
+					hitedPU2=hit.transform.gameObject;
+			}
 		}	
 		
 		ray = new Ray (new Vector3(transform.position.x-direction_.y*7/16,transform.position.y-direction_.x*7/16,transform.position.z),
@@ -94,8 +104,10 @@ public class TTank : MonoBehaviour {
 		if (Physics.Raycast(ray, out hit, rayLength)) {
 			if (!(hit.transform.gameObject.tag=="PowerUp"))
 				return false;
-			else { AddPowerUp(hit.transform.gameObject.GetComponent<TPowerUp>().type);
-				Destroy(hit.transform.gameObject); }
+			else if (gameObject.tag!="Enemy") if (hit.transform.gameObject!=hitedPU1) if (hit.transform.gameObject!=hitedPU2){ 
+					AddPowerUp(hit.transform.gameObject.GetComponent<TPowerUp>().type);
+					Destroy(hit.transform.gameObject); 
+			}
 		}	
 		return true;
 	}
@@ -119,10 +131,6 @@ public class TTank : MonoBehaviour {
 				
 	}
 	public void Shoot(){
-			GameObject pu = Instantiate(Resources.Load("Prefabs/PowerUp")) as GameObject;
-			//GameObject pu = GameObject.FindGameObjectWithTag("PowerUp");
-			pu.GetComponent<TPowerUp>().CreatePowerUp();
-			//pu.transform.position= new Vector3 (2,2,-1);
 		if (bullet == null){
 			bullet = Instantiate(Resources.Load("Prefabs/Bullet")) as GameObject;
 			TBullet myBullet = bullet.GetComponent<TBullet>();
