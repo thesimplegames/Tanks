@@ -62,8 +62,8 @@ public class LevelCreator : MonoBehaviour {
 	}
 	
 	void Start () {
-		
-		table = LoadFromFile("map63.txt", out hor, out ver);
+		Debug.Log(Settings.levelName);
+		table = LoadFromFile(Settings.levelName, out hor, out ver);
 			
 		Camera.main.transform.position = new Vector3 ((hor - 1) / 2f, (ver - 1) / 2f, -4);
 		Camera.main.orthographicSize = ver * 0.5f;

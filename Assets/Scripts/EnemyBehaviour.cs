@@ -90,7 +90,7 @@ public class EnemyBehaviour : MonoBehaviour {
 					if ((player1.transform.position - transform.position).magnitude < (eagle.transform.position - transform.position).magnitude)
 						endObject = player1.transform.position;
 					else endObject = eagle.transform.position;
-				else endObject = eagle.transform.position;
+				else if (eagle != null) endObject = eagle.transform.position;
 			}
 			
 			if (Settings.TwoPlayers) {
@@ -109,7 +109,7 @@ public class EnemyBehaviour : MonoBehaviour {
 					if ((player2.transform.position - transform.position).magnitude < (eagle.transform.position - transform.position).magnitude)
 						endObject = player2.transform.position;
 					else endObject = eagle.transform.position;
-				if (player1Destroyed && player2Destroyed)
+				if ((player1Destroyed) && (player2Destroyed) && (eagle!=null))
 					endObject = eagle.transform.position;
 			}
 			
@@ -180,7 +180,7 @@ public class EnemyBehaviour : MonoBehaviour {
 					}
 				
 				}
-					
+				if (eagle != null) {	
 				if (eagle.transform.position.x > transform.position.x && eagle.transform.position.y == transform.position.y) {
 					isTank = true;
 					transform.eulerAngles = new Vector3 (90,270,90);
@@ -201,6 +201,7 @@ public class EnemyBehaviour : MonoBehaviour {
 					transform.eulerAngles = new Vector3 (0,270,90);
 					transform.GetComponent<TTank>().direction = -Vector2.up;
 				}	
+				}
 				
 			}
 			

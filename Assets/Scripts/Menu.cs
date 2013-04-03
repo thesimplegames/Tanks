@@ -29,6 +29,8 @@ public class Menu : MonoBehaviour {
 	KeyCode Player1Right = KeyCode.D;
 	KeyCode Player1Shoot = KeyCode.Space;
 	
+	int currentMap=0;
+	
 	string Player1UpSt;
 	string Player1DownSt;
 	string Player1LeftSt;
@@ -158,14 +160,12 @@ public class Menu : MonoBehaviour {
 			//...
 			//Задать правильную папку !
 			
-			int currentMap=0;
-			
 			string myDir = "C:/";		
 			string[] maps = System.IO.Directory.GetFiles(myDir, "*.map");
 			
 			int i;
 			for (i=0;i<maps.Length;i++) {
-				if(GUI.Button(new Rect(Screen.width/20, Screen.height/16*(i)*2+Screen.height/32,Screen.width/8, Screen.height/10), Cut(maps[i]), ButtonStyle)) currentMap = i;
+				if(GUI.Button(new Rect(Screen.width/20, Screen.height/16*i*2+Screen.height/32,Screen.width/8, Screen.height/10), Cut(maps[i]), ButtonStyle)) {currentMap = i;Debug.Log(i.ToString());}
 			}
 			
 			if(GUI.Button(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/16*12,Screen.width/8, Screen.height/10), "1 Player", ButtonStyle)) StartGame(maps[currentMap], false);
@@ -176,8 +176,6 @@ public class Menu : MonoBehaviour {
 			GUI.Box(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/32,Screen.width/8, Screen.height/10), "Best", TextStyle);
 			
 			int k;
-			
-			currentMap=0;
 			
 			for (i=1;i<=15;i++) {
 				k = PlayerPrefs.GetInt("Best"+Cut(maps[currentMap])+i.ToString());
