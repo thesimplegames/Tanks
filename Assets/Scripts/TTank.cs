@@ -47,14 +47,18 @@ public class TTank : MonoBehaviour {
 			speedMod=0f;
 			shield=3f;
 			bulletlvl=1f;
-			if (gameObject.tag=="Enemy") if (Random.value<MapPrefs.powerUpChanse) {
-				GameObject pu = Instantiate(Resources.Load("Prefabs/PowerUp")) as GameObject;
-				pu.GetComponent<TPowerUp>().CreatePowerUp();
+			if (gameObject.tag=="Enemy"){
+				Achievments.AddAchievmentProgress(Achievments.AchievmentType.KillTank);
+				if (Random.value<MapPrefs.powerUpChanse) {
+					GameObject pu = Instantiate(Resources.Load("Prefabs/PowerUp")) as GameObject;
+					pu.GetComponent<TPowerUp>().CreatePowerUp();
+				}
 			}
 		}
 	}	
 	
 	public void AddPowerUp(TPowerUp.PowerUpType type){
+		Achievments.AddAchievmentProgress(Achievments.AchievmentType.FoundPowerUp);
 		switch (type) {
 		case TPowerUp.PowerUpType.BulletUp:
 			bulletlvl++;
