@@ -141,7 +141,13 @@ public class Menu : MonoBehaviour {
 	
 	void DrawMapButton(string name, int num) {
 		if(GUI.Button(new Rect(Screen.width/20, Screen.height/16*num,Screen.width/8, Screen.height/10), name, ButtonStyle)) num++;
-		
+	}
+	
+	void LevelLoad (string path) {
+		//DestroyOldMap.NeedToDestroy = true;
+		LevelLoadForMenu.LoadPath = path;
+		LevelLoadForMenu.NeedToLoad = true;
+		DestroyOldMap.NeedToDestroy = true;
 	}
 	
 	void OnGUI () {
@@ -154,18 +160,12 @@ public class Menu : MonoBehaviour {
 		PressAnyKey.fontSize = Screen.height/30;
 		
 		if (levelSelect) {
-			//Превью уровня
-			//...
-			//...
-			//...
-			//Задать правильную папку !
-			
 			string myDir = "C:/";		
 			string[] maps = System.IO.Directory.GetFiles(myDir, "*.map");
 			
 			int i;
 			for (i=0;i<maps.Length;i++) {
-				if(GUI.Button(new Rect(Screen.width/20, Screen.height/16*i*2+Screen.height/32,Screen.width/8, Screen.height/10), Cut(maps[i]), ButtonStyle)) {currentMap = i;Debug.Log(i.ToString());}
+				if(GUI.Button(new Rect(Screen.width/20, Screen.height/16*i*2+Screen.height/32,Screen.width/8, Screen.height/10), Cut(maps[i]), ButtonStyle)) {currentMap = i;LevelLoad(maps[i]);}
 			}
 			
 			if(GUI.Button(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/16*12,Screen.width/8, Screen.height/10), "1 Player", ButtonStyle)) StartGame(maps[currentMap], false);
