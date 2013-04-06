@@ -135,6 +135,7 @@ public class TTank : MonoBehaviour {
 				
 	}
 	public void Shoot(){
+		if (gameObject.tag=="Enemy") if (Random.value>0.3f) return;
 		if (bullet == null){
 			bullet = Instantiate(Resources.Load("Prefabs/Bullet")) as GameObject;
 			TBullet myBullet = bullet.GetComponent<TBullet>();
@@ -159,6 +160,14 @@ public class TTank : MonoBehaviour {
 		shield-=Time.deltaTime;
 		speedMod-=Time.deltaTime;
 		if(life==0) {
+			if (gameObject.tag=="Enemy"){
+				MapPrefs.enemyCount--;
+				GameOver.Score+=100;
+				if (MapPrefs.enemyCount<=0){
+					GameOver.win=true;
+					GameOver.IsGameOver=true;
+				}
+			}
 			if (type == 1)
 				GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player1Destroyed = true;
 			if (type == 2)

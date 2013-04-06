@@ -22,6 +22,7 @@ public class LevelCreator : MonoBehaviour {
 	// Use this for initialization
 	
 	int[,] LoadFromFile(string path, out int mWidth, out int mHeight) {
+		MapPrefs.enemyCount=0;
 		string strMap;
 		System.IO.StreamReader file = new System.IO.StreamReader(path);
 	    strMap = file.ReadLine();
@@ -50,7 +51,8 @@ public class LevelCreator : MonoBehaviour {
 				sInt += strMap[i];
 			}			
 		}
-		
+		MapPrefs.heigth=mHeight;
+		MapPrefs.length=mWidth;
 		map = new int[mWidth, mHeight];
 		for (int i = 0; i < mWidth; i++) {
 			for (int j = 0; j < mWidth; j++) {
@@ -98,6 +100,7 @@ public class LevelCreator : MonoBehaviour {
 						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
 						tankObject.GetComponent<TTank>().type = 0;
 						tankObject.transform.tag = "Enemy";
+				        MapPrefs.enemyCount++;
 						break;
 					case 6: 
 						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;

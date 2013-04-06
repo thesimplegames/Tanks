@@ -13,11 +13,11 @@ public class TPowerUp : MonoBehaviour {
 	public void CreatePowerUp(){
 		float x=2,y=2;
 		bool found=false;
-		Debug.Log ("start");
+//		Debug.Log ("start");
 		while (!found){
 			x=(int)Random.Range(1,MapPrefs.heigth-1);
 			y=(int)Random.Range(1,MapPrefs.length-1);
-			Debug.Log (x.ToString()+" "+y.ToString());
+			//Debug.Log (x.ToString()+" "+y.ToString());
 			found=true;
 			Ray ray = new Ray (new Vector3(x,y,-1), -Vector3.up);
 			RaycastHit hit;
@@ -26,7 +26,6 @@ public class TPowerUp : MonoBehaviour {
 			}
 		//if (found) Debug.DrawLine(ray.origin,ray.direction+ray.origin,Color.red,100);
 		}
-		Debug.Log ("end");
 		type = (PowerUpType)Random.Range(9,14); 
 		transform.position=new Vector3 (x,y,0);
 	}
