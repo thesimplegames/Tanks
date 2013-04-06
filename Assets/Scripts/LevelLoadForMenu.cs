@@ -70,8 +70,8 @@ public class LevelLoadForMenu : MonoBehaviour {
 			Debug.Log("Loading level");
 		table = LoadFromFile(LoadPath, out hor, out ver);
 			
-		Camera.main.transform.position = new Vector3 ((hor - 1) / 2f, (ver - 1) / 2f, -4);
-		Camera.main.orthographicSize = ver * 0.5f;
+		//Camera.main.transform.position = new Vector3 ((hor - 1) / 2f, (ver - 1) / 2f, -4);
+		//Camera.main.orthographicSize = ver * 0.5f;
 		
 		bush = Resources.Load("Prefabs/Bush") as GameObject;
 		wall = Resources.Load("Prefabs/Wall") as GameObject;

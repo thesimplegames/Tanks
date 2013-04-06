@@ -132,8 +132,8 @@ public class Menu : MonoBehaviour {
 		
 		string toReturn = "";
 		
-		for (int i = str.Length-5;i>=0;i--) {
-			if (str[i] == '/') return toReturn;
+		for (int i = str.Length-5;i>=0;i--) {//Debug.Log (str[i]);
+			if ((str[i] == '/')||(str[i] == '\\' )) return toReturn;
 			else toReturn = str[i] + toReturn;
 		}
 		return toReturn;
@@ -144,10 +144,10 @@ public class Menu : MonoBehaviour {
 	}
 	
 	void LevelLoad (string path) {
-		//DestroyOldMap.NeedToDestroy = true;
+		DestroyOldMap.NeedToDestroy = true;
 		LevelLoadForMenu.LoadPath = path;
 		LevelLoadForMenu.NeedToLoad = true;
-		DestroyOldMap.NeedToDestroy = true;
+		//DestroyOldMap.NeedToDestroy = true;
 	}
 	
 	void OnGUI () {
@@ -160,7 +160,7 @@ public class Menu : MonoBehaviour {
 		PressAnyKey.fontSize = Screen.height/30;
 		
 		if (levelSelect) {
-			string myDir = "C:/";		
+			string myDir = System.IO.Directory.GetCurrentDirectory();		
 			string[] maps = System.IO.Directory.GetFiles(myDir, "*.map");
 			
 			int i;
