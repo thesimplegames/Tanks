@@ -1,6 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\LevelCreator.cs">
+    <Files>
+      <File FileName="Assets\Scripts\LevelCreator.cs" Line="40" Column="27" />
+      <File FileName="Assets\Scripts\MapPrefs.cs" Line="9" Column="29" />
+      <File FileName="Assets\Scripts\TTank.cs" Line="172" Column="36" />
+      <File FileName="Assets\Scripts\TBullet.cs" Line="32" Column="15" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
