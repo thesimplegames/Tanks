@@ -161,18 +161,28 @@ public class TTank : MonoBehaviour {
 		speedMod-=Time.deltaTime;
 		if(life==0) {
 			if (gameObject.tag=="Enemy"){
-				MapPrefs.enemyCount--;
-				GameOver.Score+=100;
-				if (MapPrefs.enemyCount<=0){
-					GameOver.win=true;
-					GameOver.IsGameOver=true;
+					GameOver.Score+=100;
+				if (MapPrefs.enemyLeftCount>0) {
+					MapPrefs.enemyLeftCount--;
+					transform.position=spawnPosition;
+					life=Settings.enemyHP;
+					type=0;
+				} else {
+					MapPrefs.enemyCount--;
+					Debug.Log (MapPrefs.enemyCount);
+					if (MapPrefs.enemyCount<=0){
+						GameOver.win=true;
+						GameOver.IsGameOver=true;
+						Destroy(gameObject);
+					}
 				}
-			}
+			} else {
 			if (type == 1)
 				GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player1Destroyed = true;
 			if (type == 2)
 				GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player2Destroyed = true;	
 			Destroy(gameObject);
+			}
 		}
 		if (isMoving) {
 			isMoving=CanMove(direction);

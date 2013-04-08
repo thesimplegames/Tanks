@@ -46,8 +46,8 @@ public class GameOver : MonoBehaviour {
 				Score=0;
 				IsGameOver = false;
 				IsFlagOver = false; 
+				win = false;
 				Application.LoadLevel("tanks");
-				win= false;
 			}
 		}
 	}

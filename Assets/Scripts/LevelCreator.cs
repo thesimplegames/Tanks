@@ -31,15 +31,21 @@ public class LevelCreator : MonoBehaviour {
 		
 		mWidth = 0;
 		mHeight = 0;
-		bool wh = true;
+		int wh=0;
 		string sInt = "";
 		int mapPosition = 0;
 		
 		//	Loading map size
 		for (int i = 0; i < strMap.Length; i++) {
 			if (strMap[i] == ':') {
-				if (wh) {
-					wh = false;
+				if (wh==0) {
+					wh = 1;
+					MapPrefs.enemyLeftCount = System.Convert.ToInt32(sInt);
+					sInt = "";
+					continue;
+				}
+				if (wh==1) {
+					wh = 2;
 					mWidth = System.Convert.ToInt32(sInt);
 					sInt = "";
 				} else {
@@ -100,7 +106,7 @@ public class LevelCreator : MonoBehaviour {
 						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
 						tankObject.GetComponent<TTank>().type = 0;
 						tankObject.transform.tag = "Enemy";
-				        MapPrefs.enemyCount++;
+						MapPrefs.enemyCount++;
 						break;
 					case 6: 
 						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
