@@ -170,10 +170,10 @@ public class TTank : MonoBehaviour {
 				} else {
 					MapPrefs.enemyCount--;
 					Debug.Log (MapPrefs.enemyCount);
+					Destroy(gameObject);
 					if (MapPrefs.enemyCount<=0){
 						GameOver.win=true;
 						GameOver.IsGameOver=true;
-						Destroy(gameObject);
 					}
 				}
 			} else {
