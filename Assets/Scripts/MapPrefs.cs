@@ -8,7 +8,7 @@ public class MapPrefs : MonoBehaviour {
 	public static int enemyCount;
 	public static int enemyLeftCount;
 	public static float powerUpChanse=1f;
-	
+	public static bool isBackGround=false;
 	// Use this for initialization
 	void Start () {
 	

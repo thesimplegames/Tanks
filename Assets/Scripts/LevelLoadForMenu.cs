@@ -68,10 +68,10 @@ public class LevelLoadForMenu : MonoBehaviour {
 	void Update () {
 		if (NeedToLoad){
 			Debug.Log("Loading level");
-		table = LoadFromFile(LoadPath, out hor, out ver);
+		table = LevelCreator.LoadFromFile(LoadPath, out hor, out ver);
 			
-		//Camera.main.transform.position = new Vector3 ((hor - 1) / 2f, (ver - 1) / 2f, -4);
-		//Camera.main.orthographicSize = ver * 0.5f;
+		Camera.main.transform.position = new Vector3 ((hor - 1) / 2f, (ver - 1) / 2f, -4);
+		Camera.main.orthographicSize = ver * 0.5f;
 		
 		bush = Resources.Load("Prefabs/Bush") as GameObject;
 		wall = Resources.Load("Prefabs/Wall") as GameObject;
@@ -84,28 +84,40 @@ public class LevelLoadForMenu : MonoBehaviour {
 		
 		//Instantiate(nothing, new Vector3(0,0,8), nothing.transform.rotation);
 		
+		Camera.main.transform.position = new Vector3 ((hor - 1) / 2f, (ver - 1) / 2f, -4);
+		Camera.main.orthographicSize = ver * 0.5f;
+		
+		bush = Resources.Load("Prefabs/Bush") as GameObject;
+		wall = Resources.Load("Prefabs/Wall") as GameObject;
+		megaWall = Resources.Load("Prefabs/MegaWall") as GameObject;
+		water = Resources.Load("Prefabs/Water") as GameObject;
+		eagle = Resources.Load("Prefabs/Eagle") as GameObject;
+		nothing = Resources.Load("Prefabs/Nothing") as GameObject;
+		tank = Resources.Load("Prefabs/Tank") as GameObject;
+		
+		
+		Instantiate(nothing, new Vector3(0,0,8), nothing.transform.rotation);
+		
 		for (int i = 0; i < hor; i++)
 			for (int j = 0; j < ver; j++) {
 				switch (table[i, j]) {
 					case 1: 
-						InstantiatedObject = Instantiate(wall, new Vector2(i, j), wall.transform.rotation) as GameObject;
-						InstantiatedObject.transform.tag = "ToDestroy";
+						Instantiate(wall, new Vector2(i, j), wall.transform.rotation);
 						break;
 					case 2: 
-						InstantiatedObject = Instantiate(water, new Vector2(i, j), water.transform.rotation) as GameObject;
-						InstantiatedObject.transform.tag = "ToDestroy";
+						Instantiate(water, new Vector2(i, j), water.transform.rotation);
 						break;
 					case 3: 
-						InstantiatedObject = Instantiate(bush, new Vector3(i, j, bush.transform.position.z), bush.transform.rotation) as GameObject;
-						InstantiatedObject.transform.tag = "ToDestroy";
+						Instantiate(bush, new Vector3(i, j, bush.transform.position.z), bush.transform.rotation);
 						break;
-					/*case 4: 
+					case 4: 
 						Instantiate(eagle, new Vector2(i, j), eagle.transform.rotation);
 						break;
 					case 5: 
 						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
 						tankObject.GetComponent<TTank>().type = 0;
 						tankObject.transform.tag = "Enemy";
+						MapPrefs.enemyCount++;
 						break;
 					case 6: 
 						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
@@ -123,10 +135,9 @@ public class LevelLoadForMenu : MonoBehaviour {
 							tankObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/SilverTank") as Texture;
 							GameGUI.Player2 = tankObject;
 						}
-						break;*/
+						break;
 					case 8: 
-						InstantiatedObject = Instantiate(megaWall, new Vector2(i, j), megaWall.transform.rotation) as GameObject;
-						InstantiatedObject.transform.tag = "ToDestroy";
+						Instantiate(megaWall, new Vector2(i, j), megaWall.transform.rotation);
 						break;
 				}
 			}

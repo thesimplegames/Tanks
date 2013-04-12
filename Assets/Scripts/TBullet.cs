@@ -37,7 +37,8 @@ public class TBullet : MonoBehaviour {
 				Destroy(this.gameObject);
 				break;		
 			case "Enemy":
-				if (!(parent.tag=="Enemy"))
+				if ((parent.tag!="Enemy")||(MapPrefs.isBackGround))
+				//if (!(parent.tag=="Enemy"))
 				col.gameObject.GetComponent<TTank>().Shooted();
 				Destroy(this.gameObject);
 				break;		

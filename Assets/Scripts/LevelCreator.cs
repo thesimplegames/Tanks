@@ -20,8 +20,7 @@ public class LevelCreator : MonoBehaviour {
 	GameObject tankObject;
 	
 	// Use this for initialization
-	
-	int[,] LoadFromFile(string path, out int mWidth, out int mHeight) {
+	public static int[,] LoadFromFile(string path, out int mWidth, out int mHeight) {
 		MapPrefs.enemyCount=0;
 		string strMap;
 		System.IO.StreamReader file = new System.IO.StreamReader(path);

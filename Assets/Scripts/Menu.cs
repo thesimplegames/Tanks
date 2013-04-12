@@ -29,7 +29,7 @@ public class Menu : MonoBehaviour {
 	KeyCode Player1Right = KeyCode.D;
 	KeyCode Player1Shoot = KeyCode.Space;
 	
-	int currentMap=0;
+	public static int currentMap=1;
 	
 	string Player1UpSt;
 	string Player1DownSt;
@@ -61,13 +61,15 @@ public class Menu : MonoBehaviour {
 	bool Player2RightInput = false;
 	bool Player2ShootInput = false;
 	
-	int PlayerLife = 1;
+	int PlayerLife = 3;
 	int EnemyLife = 1;
 	int FlagLife = 1;
 	
 	public int MaxPlayerLife = 9;
 	public int MaxEnemyLife = 9;
 	public int MaxFlagLife = 9;
+	
+	public static string mapsDir=System.IO.Directory.GetCurrentDirectory()+"\\Maps\\Company";
 	
 	void NullConttrolsChange() {
 		
@@ -86,7 +88,7 @@ public class Menu : MonoBehaviour {
 	}
 	
 	void StartGame(string levelName, bool twoPlayers) {
-		
+		MapPrefs.isBackGround=false;
 		Settings.Player1[0] = Player1Up;
 		Settings.Player1[1] = Player1Left;
 		Settings.Player1[2] = Player1Down;
@@ -147,7 +149,7 @@ public class Menu : MonoBehaviour {
 		DestroyOldMap.NeedToDestroy = true;
 		LevelLoadForMenu.LoadPath = path;
 		LevelLoadForMenu.NeedToLoad = true;
-		//DestroyOldMap.NeedToDestroy = true;
+		MapPrefs.isBackGround=false;
 	}
 	
 	void OnGUI () {
@@ -160,34 +162,38 @@ public class Menu : MonoBehaviour {
 		PressAnyKey.fontSize = Screen.height/30;
 		
 		if (levelSelect) {
-			string myDir = System.IO.Directory.GetCurrentDirectory();		
-			string[] maps = System.IO.Directory.GetFiles(myDir, "*.map");
-			
 			int i;
-			for (i=0;i<maps.Length;i++) {
-				if(GUI.Button(new Rect(Screen.width/20, Screen.height/16*i*2+Screen.height/32,Screen.width/8, Screen.height/10), Cut(maps[i]), ButtonStyle)) {currentMap = i;LevelLoad(maps[i]);}
-			}
+			//string[] maps = System.IO.Directory.GetFiles(myDir+"\\Maps\\Company", "*.map");
+			//for (i=0;i<maps.Length;i++) {
+			//	if(GUI.Button(new Rect(Screen.width/20, Screen.height/16*i*2+Screen.height/32,Screen.width/8, Screen.height/10), Cut(maps[i]), ButtonStyle)) {currentMap = i;LevelLoad(maps[i]);}
+			//}
 			
-			if(GUI.Button(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/16*12,Screen.width/8, Screen.height/10), "1 Player", ButtonStyle)) StartGame(maps[currentMap], false);
-			if(GUI.Button(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/16*14,Screen.width/8, Screen.height/10), "2 Players", ButtonStyle)) StartGame(maps[currentMap], true);
+			if(GUI.Button(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/16*12,Screen.width/8, Screen.height/10), "1 Player", ButtonStyle)) StartGame(mapsDir+"\\"+currentMap+".map", false);
+			if(GUI.Button(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/16*14,Screen.width/8, Screen.height/10), "2 Players", ButtonStyle)) StartGame(mapsDir+"\\"+currentMap+".map", true);
 			
-			if(GUI.Button(new Rect(Screen.width/20, Screen.height/16*14,Screen.width/8, Screen.height/10), "Back", ButtonStyle)) levelSelect = false;
+			if(GUI.Button(new Rect(Screen.width/20, Screen.height/16*14,Screen.width/8, Screen.height/10), "Back", ButtonStyle)) levelSelect = MapPrefs.isBackGround = false;
 		
-			GUI.Box(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/32,Screen.width/8, Screen.height/10), "Best", TextStyle);
+			//GUI.Box(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/32,Screen.width/8, Screen.height/10), "Best", TextStyle);
 			
 			int k;
 			
-			for (i=1;i<=15;i++) {
-				k = PlayerPrefs.GetInt("Best"+Cut(maps[currentMap])+i.ToString());
-				if (k==null) k=0;
-				GUI.Box(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/25*i + Screen.height/16,Screen.width/8, Screen.height/20), i.ToString()+". "+k.ToString(), TextNearFieldStyle);
-			}
+		//	for (i=1;i<=15;i++) {
+		//		k = PlayerPrefs.GetInt("Best"+Cut(maps[currentMap])+i.ToString());
+		//		if (k==null) k=0;
+		//		GUI.Box(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/25*i + Screen.height/16,Screen.width/8, Screen.height/20), i.ToString()+". "+k.ToString(), TextNearFieldStyle);
+		//	}
 		}
 		
 		if ((!MySettings)&&(!About)&&(!StGame)&&(!levelSelect)) {
 			
 			      GUI.Box(new Rect(Screen.width/10*4, Screen.height/16*4, Screen.width/5, Screen.height/10), "Menu", TextStyle);
-			if(GUI.Button(new Rect(Screen.width/10*4, Screen.height/16*7, Screen.width/5, Screen.height/10), "Start game",ButtonStyle)) levelSelect = true;
+			if(GUI.Button(new Rect(Screen.width/10*4, Screen.height/16*7, Screen.width/5, Screen.height/10), "Start game",ButtonStyle)) {
+				levelSelect = true;	
+				LevelLoadForMenu.NeedToLoad=true;
+				LevelLoadForMenu.LoadPath=mapsDir+"\\Start.map";
+				Settings.enemyHP=1;
+				MapPrefs.isBackGround=true;
+			}
 			if(GUI.Button(new Rect(Screen.width/10*4, Screen.height/16*9, Screen.width/5, Screen.height/10), "Options", ButtonStyle)) MySettings = true;
 			if(GUI.Button(new Rect(Screen.width/10*4, Screen.height/16*11,Screen.width/5, Screen.height/10), "About", ButtonStyle)) About = true;
 			if(GUI.Button(new Rect(Screen.width/10*4, Screen.height/16*13,Screen.width/5, Screen.height/10), "Exit", ButtonStyle)) Application.Quit();

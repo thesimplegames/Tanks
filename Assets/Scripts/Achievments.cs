@@ -15,6 +15,8 @@ public class Achievments : MonoBehaviour {
 	public static bool first10PowerUp=false;
 	public static bool first100PowerUp=false;
 	
+	public static bool megaWaiter = false;
+	
 	public static void AddAchievmentProgress(AchievmentType type){
 		switch (type){
 		case AchievmentType.KillTank:
@@ -39,6 +41,7 @@ public class Achievments : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	Debug.Log(first1Kill);
+		if (MapPrefs.isBackGround) if (MapPrefs.enemyCount<=1) megaWaiter=true;
+		if (megaWaiter) Debug.Log("ASDASD");
 	}
 }

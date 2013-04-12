@@ -29,7 +29,7 @@ public class TTank : MonoBehaviour {
 		isMoving = false;
 		direction = new Vector2 (0,-1);
 		if (type == 0) {
-			gameObject.GetComponent<EnemyBehaviour>().enabled = true;
+			gameObject.GetComponent<EnemyBehaviour2>().enabled = true;
 			gameObject.GetComponent<Handler>().enabled = false;
 		if (type == 1)
 			GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player1Destroyed = false;
@@ -49,7 +49,7 @@ public class TTank : MonoBehaviour {
 			bulletlvl=1f;
 			if (gameObject.tag=="Enemy"){
 				Achievments.AddAchievmentProgress(Achievments.AchievmentType.KillTank);
-				if (Random.value<MapPrefs.powerUpChanse) {
+				if (!MapPrefs.isBackGround) if (Random.value<MapPrefs.powerUpChanse) {
 					GameObject pu = Instantiate(Resources.Load("Prefabs/PowerUp")) as GameObject;
 					pu.GetComponent<TPowerUp>().CreatePowerUp();
 				}
