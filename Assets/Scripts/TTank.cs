@@ -17,6 +17,8 @@ public class TTank : MonoBehaviour {
 	private float shield;
 	private float bulletlvl;
 	
+	public GameObject Shield;
+	
 	// Use this for initialization
 	void Start () {
 		speed = 3.5f;
@@ -46,8 +48,10 @@ public class TTank : MonoBehaviour {
 		transform.position=spawnPosition;
 			speedMod=0f;
 			shield=3f;
+			Shield.particleSystem.Play();
 			bulletlvl=1f;
 			if (gameObject.tag=="Enemy"){
+				shield=0;
 				Achievments.AddAchievmentProgress(Achievments.AchievmentType.KillTank);
 				if (!MapPrefs.isBackGround) if (Random.value<MapPrefs.powerUpChanse) {
 					GameObject pu = Instantiate(Resources.Load("Prefabs/PowerUp")) as GameObject;
@@ -66,6 +70,7 @@ public class TTank : MonoBehaviour {
 		break;
 		case TPowerUp.PowerUpType.Shield:
 			shield=5f;
+			Shield.particleSystem.Play();
 		break;
 		case TPowerUp.PowerUpType.TankLife:
 			life++;
@@ -158,6 +163,7 @@ public class TTank : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		shield-=Time.deltaTime;
+		if (shield<=0) if (Shield.particleSystem.isPlaying) Shield.particleSystem.Stop();
 		speedMod-=Time.deltaTime;
 		if(life==0) {
 			if (gameObject.tag=="Enemy"){

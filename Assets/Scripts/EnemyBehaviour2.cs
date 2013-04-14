@@ -60,7 +60,8 @@ public class EnemyBehaviour2 : MonoBehaviour {
 			}
 		}
 		
-		if (Random.Range(0,100) < 1) {
+		if (Random.value*100<1) {
+			
 			if (tank.CanMove(Vector3.up) && direction != Vector3.up)
 				direction = Vector3.up;
 			if (tank.CanMove(-Vector3.up) && direction != -Vector3.up)
@@ -69,6 +70,7 @@ public class EnemyBehaviour2 : MonoBehaviour {
 				direction = Vector3.right;
 			if (tank.CanMove(-Vector3.right) && direction != -Vector3.right)
 				direction = -Vector3.right;
+				
 		}
 		
 		if (Random.Range(0,100) < 10)
