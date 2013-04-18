@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\Handler.cs" />
      <Compile Include="Assets\Scripts\LevelCreator.cs" />
      <Compile Include="Assets\Scripts\LevelLoadForMenu.cs" />
+     <Compile Include="Assets\Scripts\Levels.cs" />
      <Compile Include="Assets\Scripts\MapPrefs.cs" />
      <Compile Include="Assets\Scripts\Menu.cs" />
      <Compile Include="Assets\Scripts\Settings.cs" />

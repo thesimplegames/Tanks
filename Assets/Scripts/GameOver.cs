@@ -75,8 +75,7 @@ public class GameOver : MonoBehaviour {
 					IsGameOver = false;
 					IsFlagOver = false; 
 					win = false;
-					Menu.currentMap=1;
-					//Menu.currentMap++;
+					//Menu.currentMap=1;
 					Settings.levelName=Menu.mapsDir+"\\"+Menu.currentMap+".map";
 					GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player1Destroyed=false;
 					GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player2Destroyed=false;

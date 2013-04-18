@@ -23,9 +23,16 @@ public class LevelCreator : MonoBehaviour {
 	public static int[,] LoadFromFile(string path, out int mWidth, out int mHeight) {
 		MapPrefs.enemyCount=0;
 		string strMap;
-		System.IO.StreamReader file = new System.IO.StreamReader(path);
-	    strMap = file.ReadLine();
-		file.Close();	
+		//System.IO.StreamReader file = new System.IO.StreamReader(path);
+	    //strMap = file.ReadLine();
+		//file.Close();
+//		Debug.Log(Levels.levels[0]);
+		if (path==Menu.mapsDir+"\\Start.map") {
+			strMap=Levels.levels[0];
+		}else{
+		if (Menu.currentMap>4) Menu.currentMap=1;
+		strMap=Levels.levels[Menu.currentMap];
+		}
 		int[,] map;
 		
 		mWidth = 0;
