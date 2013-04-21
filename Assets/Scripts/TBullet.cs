@@ -11,7 +11,7 @@ public class TBullet : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider col){
-		if (!(col.gameObject==parent)) 
+		if (parent!=null) if (!(col.gameObject==parent)) 
 		switch (col.gameObject.tag){
 			case "MegaWall": 
 				Destroy(this.gameObject);

@@ -108,8 +108,8 @@ public class Menu : MonoBehaviour {
 		Settings.levelName = levelName;
 		
 		Settings.TwoPlayers = twoPlayers;
-		
 		Application.LoadLevel("tanks");	
+		GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player2Destroyed=!twoPlayers;
 	}
 	
 	bool CanChange() {
