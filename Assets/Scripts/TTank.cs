@@ -79,6 +79,9 @@ public class TTank : MonoBehaviour {
 			speedMod=5f;
 		break;
 		case TPowerUp.PowerUpType.Bomb:
+			foreach(GameObject enemy in	GameObject.FindGameObjectsWithTag("Enemy")){
+				enemy.GetComponent<TTank>().life=0;
+			}
 		break;	
 		}
 	}
