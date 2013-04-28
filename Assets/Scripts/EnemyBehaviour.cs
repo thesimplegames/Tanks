@@ -14,6 +14,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	float upd, downd, leftd, rightd;
 	public bool player1Destroyed, player2Destroyed;
 	void Start () {
+		if (MapPrefs.isPause) return;
 		
 		player1Destroyed = GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player1Destroyed;
 		player2Destroyed = GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player2Destroyed;

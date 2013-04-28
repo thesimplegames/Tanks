@@ -19,7 +19,7 @@ public class TFlag : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if (lives == 0) {
+		if (lives == 0) if (!MapPrefs.isBackGround) {
 			GameOver.IsFlagOver = true;
 			Destroy (this.gameObject);
 		}

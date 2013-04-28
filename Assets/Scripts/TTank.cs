@@ -44,8 +44,9 @@ public class TTank : MonoBehaviour {
 	public void Shooted(){
 //		Debug.Log(tag+life.ToString());
 		if (shield<=0){
-		life--;	
-		transform.position=spawnPosition;
+			life--;	
+			transform.position=spawnPosition;
+			isMoving=false;
 			speedMod=0f;
 			shield=3f;
 			Shield.particleSystem.Play();
@@ -125,6 +126,7 @@ public class TTank : MonoBehaviour {
 	}
 	
 	public void Move(Vector2 direction_){
+		if (MapPrefs.isPause) return;
 		direction = direction_;
 		if (direction==Vector2.up){
 		transform.eulerAngles = new Vector3 (180,270,90);
@@ -165,6 +167,7 @@ public class TTank : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (MapPrefs.isPause) return;
 		shield-=Time.deltaTime;
 		if (shield<=0) if (Shield.particleSystem.isPlaying) Shield.particleSystem.Stop();
 		speedMod-=Time.deltaTime;
@@ -178,7 +181,6 @@ public class TTank : MonoBehaviour {
 					type=0;
 				} else {
 					MapPrefs.enemyCount--;
-					Debug.Log (MapPrefs.enemyCount);
 					Destroy(gameObject);
 					if (MapPrefs.enemyCount<=0){
 						GameOver.win=true;

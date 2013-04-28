@@ -49,6 +49,7 @@ public class TBullet : MonoBehaviour {
 			}
 	}
 	void Update () {
+		if (MapPrefs.isPause) return;
 		transform.position = new Vector3 (transform.position.x+direction.x*speed*Time.deltaTime,
 										transform.position.y+direction.y*speed*Time.deltaTime,
 										transform.position.z);

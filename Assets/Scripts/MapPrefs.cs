@@ -10,6 +10,9 @@ public class MapPrefs : MonoBehaviour {
 	public static float powerUpChanse=1f;
 	public static bool isBackGround=false;
 	public static bool usePreloadedMaps=false;
+	public static bool isPause;
+	
+	
 	// Use this for initialization
 	void Start () {
 	

@@ -79,6 +79,7 @@ public class LevelCreator : MonoBehaviour {
 	}
 	
 	void Start () {
+		MapPrefs.isPause=false;
 		Debug.Log(Settings.levelName);
 		table = LoadFromFile(Settings.levelName, out hor, out ver);
 			

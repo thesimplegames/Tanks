@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections;
-
-
 public class Menu : MonoBehaviour {
 	
 	public GUIStyle TextStyle; 
@@ -332,4 +330,8 @@ public class Menu : MonoBehaviour {
 		}
 			
 	}	
+	
+	void Start () {
+		MapPrefs.isPause=false;
+	}
 }
