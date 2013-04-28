@@ -67,7 +67,6 @@ public class LevelLoadForMenu : MonoBehaviour {
 	
 	void Update () {
 		if (NeedToLoad){
-			Debug.Log("Loading level");
 		table = LevelCreator.LoadFromFile(LoadPath, out hor, out ver);
 			
 		Camera.main.transform.position = new Vector3 ((hor - 1) / 2f, (ver - 1) / 2f, -4);
@@ -145,5 +144,5 @@ public class LevelLoadForMenu : MonoBehaviour {
 	}
 		NeedToLoad = false;
 	}
-	
+	Debug
 }

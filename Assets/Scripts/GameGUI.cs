@@ -15,19 +15,22 @@ public class GameGUI : MonoBehaviour {
 	int X,Y;
 	int j,k,i;
 	
+	
+	void Update () {
+	if (Input.GetKeyDown(KeyCode.Escape)) MapPrefs.isPause=!MapPrefs.isPause;
+	}
 	void OnGUI() {
 		
-		if (MapPrefs.isPause) {
-			GameOver.TextStyle.fontSize = Screen.height/15;
-			GameOver.ButtonStyle.fontSize = Screen.height/30; 
-			
-			GUI.Box(new Rect(1, 1, Screen.width, Screen.height), "", GameOver.Fon);
-		
-			GUI.Box(new Rect(Screen.width/10*4, Screen.height/16*4, Screen.width/5, Screen.height/10), "Pause", GameOver.TextStyle);
-			
-			if(GUI.Button(new Rect(Screen.width/10*2, Screen.height/16*13,Screen.width/5, Screen.height/10), "Exit",GameOver.ButtonStyle))
+		if (MapPrefs.isPause) if (!GameOver.IsGameOver) {
+			GUIStyle ButtonStyle = GameObject.Find("GameOver").GetComponent<GameOver>().ButtonStyle;
+			GUIStyle Fon = GameObject.Find("GameOver").GetComponent<GameOver>().Fon;
+			TextStyle.fontSize = Screen.height/15;
+			ButtonStyle.fontSize = Screen.height/30; 
+			GUI.Box(new Rect(1, 1, Screen.width, Screen.height), "", Fon);
+			GUI.Box(new Rect(Screen.width/10*4.7f, Screen.height/16*4, Screen.width/5, Screen.height/10), "Pause", TextStyle);
+			if(GUI.Button(new Rect(Screen.width/10*2, Screen.height/16*13,Screen.width/5, Screen.height/10), "Exit",ButtonStyle))
 				Application.LoadLevel("MenuScene");
-			if(GUI.Button(new Rect(Screen.width/10*6, Screen.height/16*13,Screen.width/5, Screen.height/10), "Continue", GameOver.ButtonStyle)){
+			if(GUI.Button(new Rect(Screen.width/10*6, Screen.height/16*13,Screen.width/5, Screen.height/10), "Continue", ButtonStyle)){
 				MapPrefs.isPause=false;
 			}
 			

@@ -107,7 +107,6 @@ public class Menu : MonoBehaviour {
 		
 		Settings.TwoPlayers = twoPlayers;
 		Application.LoadLevel("tanks");	
-		GameObject.FindGameObjectWithTag("IfDestroyed").GetComponent<ifDestroyed>().player2Destroyed=!twoPlayers;
 	}
 	
 	bool CanChange() {
@@ -160,26 +159,11 @@ public class Menu : MonoBehaviour {
 		PressAnyKey.fontSize = Screen.height/30;
 		
 		if (levelSelect) {
-			int i;
-			//string[] maps = System.IO.Directory.GetFiles(myDir+"\\Maps\\Company", "*.map");
-			//for (i=0;i<maps.Length;i++) {
-			//	if(GUI.Button(new Rect(Screen.width/20, Screen.height/16*i*2+Screen.height/32,Screen.width/8, Screen.height/10), Cut(maps[i]), ButtonStyle)) {currentMap = i;LevelLoad(maps[i]);}
-			//}
 			
 			if(GUI.Button(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/16*12,Screen.width/8, Screen.height/10), "1 Player", ButtonStyle)) StartGame(mapsDir+"\\"+currentMap+".map", false);
 			if(GUI.Button(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/16*14,Screen.width/8, Screen.height/10), "2 Players", ButtonStyle)) StartGame(mapsDir+"\\"+currentMap+".map", true);
 			
 			if(GUI.Button(new Rect(Screen.width/20, Screen.height/16*14,Screen.width/8, Screen.height/10), "Back", ButtonStyle)) levelSelect = MapPrefs.isBackGround = false;
-		
-			//GUI.Box(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/32,Screen.width/8, Screen.height/10), "Best", TextStyle);
-			
-			int k;
-			
-		//	for (i=1;i<=15;i++) {
-		//		k = PlayerPrefs.GetInt("Best"+Cut(maps[currentMap])+i.ToString());
-		//		if (k==null) k=0;
-		//		GUI.Box(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/25*i + Screen.height/16,Screen.width/8, Screen.height/20), i.ToString()+". "+k.ToString(), TextNearFieldStyle);
-		//	}
 		}
 		
 		if ((!MySettings)&&(!About)&&(!StGame)&&(!levelSelect)) {

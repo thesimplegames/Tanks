@@ -26,6 +26,7 @@ public class GameOver : MonoBehaviour {
 		if (IsFlagOver) IsGameOver = true;
 		
 		if (IsGameOver) {
+			MapPrefs.isPause=true;
 			if (win){
 				TextStyle.fontSize = Screen.height/15;
 				ButtonStyle.fontSize = Screen.height/30; 
@@ -44,6 +45,7 @@ public class GameOver : MonoBehaviour {
 				if(GUI.Button(new Rect(Screen.width/10*2, Screen.height/16*13,Screen.width/5, Screen.height/10), "Exit", ButtonStyle))
 					Application.LoadLevel("MenuScene");
 				if(GUI.Button(new Rect(Screen.width/10*6, Screen.height/16*13,Screen.width/5, Screen.height/10), "Next", ButtonStyle)){
+					MapPrefs.isPause=false;
 					IsGameOver = false;
 					IsFlagOver = false; 
 					win = false;
@@ -71,6 +73,7 @@ public class GameOver : MonoBehaviour {
 				if(GUI.Button(new Rect(Screen.width/10*2, Screen.height/16*13,Screen.width/5, Screen.height/10), "Exit", ButtonStyle))
 					Application.LoadLevel("MenuScene");
 				if(GUI.Button(new Rect(Screen.width/10*6, Screen.height/16*13,Screen.width/5, Screen.height/10), "Restart", ButtonStyle)){
+					MapPrefs.isPause=false;
 					Score=0;
 					IsGameOver = false;
 					IsFlagOver = false; 

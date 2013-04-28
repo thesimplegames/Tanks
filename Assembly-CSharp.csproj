@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\Levels.cs" />
      <Compile Include="Assets\Scripts\MapPrefs.cs" />
      <Compile Include="Assets\Scripts\Menu.cs" />
+     <Compile Include="Assets\Scripts\Saver.cs" />
      <Compile Include="Assets\Scripts\Settings.cs" />
      <Compile Include="Assets\Scripts\TBullet.cs" />
      <Compile Include="Assets\Scripts\TFlag.cs" />

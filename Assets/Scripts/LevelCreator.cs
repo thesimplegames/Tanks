@@ -27,7 +27,6 @@ public class LevelCreator : MonoBehaviour {
 			System.IO.StreamReader file = new System.IO.StreamReader(path);
 	 	   strMap = file.ReadLine();
 			file.Close();
-		Debug.Log(Levels.levels[0]);
 		} else {
 			if (path==Menu.mapsDir+"\\Start.map") {
 				strMap=Levels.levels[0];
@@ -80,7 +79,6 @@ public class LevelCreator : MonoBehaviour {
 	
 	void Start () {
 		MapPrefs.isPause=false;
-		Debug.Log(Settings.levelName);
 		table = LoadFromFile(Settings.levelName, out hor, out ver);
 			
 		Camera.main.transform.position = new Vector3 ((hor - 1) / 2f, (ver - 1) / 2f, -4);
