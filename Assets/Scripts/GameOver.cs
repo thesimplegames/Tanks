@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameOver : MonoBehaviour {
-
+	
 	public static bool IsGameOver = false;
 	public static bool IsFlagOver = false;
 	public static int Score = 0;
@@ -36,11 +37,10 @@ public class GameOver : MonoBehaviour {
 				GUI.Box(new Rect(Screen.width/10*4, Screen.height/16*4, Screen.width/5, Screen.height/10), "You won!", TextStyle);
 				GUI.Box(new Rect(Screen.width/10*4, Screen.height/16*6, Screen.width/5, Screen.height/10),
 					"Your Score " + Score.ToString(), TextStyle);
-			
-				PlayerPrefs.GetInt( "Best", Best);
-				if (Best < Score) {Best = Score; PlayerPrefs.SetInt("Best", Best);}
+				Best = int.Parse(Saver.Load("Best"));
+				if (Best < Score) {Best = Score; Saver.Save("Best",Best.ToString());}
 				GUI.Box(new Rect(Screen.width/10*4, Screen.height/16*8, Screen.width/5, Screen.height/10),
-				"Best " + Best.ToString(), TextStyle);
+				"Best " + Saver.Load("Best"), TextStyle);
 				
 				if(GUI.Button(new Rect(Screen.width/10*2, Screen.height/16*13,Screen.width/5, Screen.height/10), "Exit", ButtonStyle))
 					Application.LoadLevel("MenuScene");
@@ -65,10 +65,10 @@ public class GameOver : MonoBehaviour {
 				GUI.Box(new Rect(Screen.width/10*4, Screen.height/16*6, Screen.width/5, Screen.height/10),
 					"Your Score " + Score.ToString(), TextStyle);
 			
-				PlayerPrefs.GetInt( "Best", Best);
-				if (Best < Score) {Best = Score; PlayerPrefs.SetInt("Best", Best);}
+				Best = int.Parse(Saver.Load("Best"));
+				if (Best < Score) {Best = Score; Saver.Save("Best",Best.ToString());}
 				GUI.Box(new Rect(Screen.width/10*4, Screen.height/16*8, Screen.width/5, Screen.height/10),
-				"Best " + Best.ToString(), TextStyle);
+				"Best " + Saver.Load("Best"), TextStyle);
 				
 				if(GUI.Button(new Rect(Screen.width/10*2, Screen.height/16*13,Screen.width/5, Screen.height/10), "Exit", ButtonStyle))
 					Application.LoadLevel("MenuScene");

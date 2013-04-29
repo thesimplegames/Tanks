@@ -317,5 +317,6 @@ public class Menu : MonoBehaviour {
 	
 	void Start () {
 		MapPrefs.isPause=false;
+		Saver.Begin(System.IO.Directory.GetCurrentDirectory()+"\\Params.conf");
 	}
 }

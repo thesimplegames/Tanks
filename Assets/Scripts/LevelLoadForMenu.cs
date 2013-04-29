@@ -116,6 +116,7 @@ public class LevelLoadForMenu : MonoBehaviour {
 						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
 						tankObject.GetComponent<TTank>().type = 0;
 						tankObject.transform.tag = "Enemy";
+						tankObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/SilverTank") as Texture;
 						MapPrefs.enemyCount++;
 						break;
 					case 6: 
@@ -131,7 +132,6 @@ public class LevelLoadForMenu : MonoBehaviour {
 							tankObject.GetComponent<TTank>().type = 2;
 							tankObject.GetComponent<Handler>().SetKeyCodes(Settings.Player2);
 							tankObject.transform.tag = "Player2";
-							tankObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/SilverTank") as Texture;
 							GameGUI.Player2 = tankObject;
 						}
 						break;
@@ -144,5 +144,4 @@ public class LevelLoadForMenu : MonoBehaviour {
 	}
 		NeedToLoad = false;
 	}
-	Debug
 }

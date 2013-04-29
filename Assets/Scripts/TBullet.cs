@@ -8,6 +8,7 @@ public class TBullet : MonoBehaviour {
 	public float speed;
 	
 	void Start () {
+		Saver.Begin(System.IO.Directory.GetCurrentDirectory()+"\\Params.conf");
 	}
 	
 	void OnTriggerEnter(Collider col){

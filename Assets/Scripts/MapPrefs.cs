@@ -11,15 +11,5 @@ public class MapPrefs : MonoBehaviour {
 	public static bool isBackGround=false;
 	public static bool usePreloadedMaps=false;
 	public static bool isPause;
-	
-	
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }

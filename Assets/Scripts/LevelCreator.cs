@@ -113,6 +113,7 @@ public class LevelCreator : MonoBehaviour {
 					case 5: 
 						tankObject = Instantiate(tank, new Vector3(i, j, tank.transform.position.z), tank.transform.rotation) as GameObject;
 						tankObject.GetComponent<TTank>().type = 0;
+						tankObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/SilverTank") as Texture;
 						tankObject.transform.tag = "Enemy";
 						MapPrefs.enemyCount++;
 						break;
@@ -129,7 +130,6 @@ public class LevelCreator : MonoBehaviour {
 							tankObject.GetComponent<TTank>().type = 2;
 							tankObject.GetComponent<Handler>().SetKeyCodes(Settings.Player2);
 							tankObject.transform.tag = "Player2";
-							tankObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/SilverTank") as Texture;
 							GameGUI.Player2 = tankObject;
 						}
 						break;
