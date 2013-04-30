@@ -27,22 +27,21 @@ public class TPowerUp : MonoBehaviour {
 		//if (found) Debug.DrawLine(ray.origin,ray.direction+ray.origin,Color.red,100);
 		}
 		type = (PowerUpType)Random.Range(9,14); 
-		transform.eulerAngles = new Vector3 (0,270,90);
 		switch (type) {
 		case PowerUpType.TankLife:
 			gameObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/PowerUp_Health") as Texture;
 			break;
 		case PowerUpType.Shield:
-			gameObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/PowerUp_Health") as Texture;
+			gameObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/ShieldPowerUp") as Texture;
 			break;
 		case PowerUpType.BulletUp:
-			gameObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/PowerUp_Health") as Texture;
+			gameObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/BulletPowerUp") as Texture;
 			break;
 		case PowerUpType.Bomb:
-			gameObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/PowerUp_Health") as Texture;
+			gameObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/BombPowerUp") as Texture;
 			break;
 		case PowerUpType.TankSpeedUp:
-			gameObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/PowerUp_Health") as Texture;
+			gameObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/TankSpeedPowerUp") as Texture;
 			break;
 		}
 		transform.position=new Vector3 (x,y,0);

@@ -130,6 +130,7 @@ public class LevelCreator : MonoBehaviour {
 							tankObject.GetComponent<TTank>().type = 2;
 							tankObject.GetComponent<Handler>().SetKeyCodes(Settings.Player2);
 							tankObject.transform.tag = "Player2";
+							tankObject.renderer.material.mainTexture = Resources.Load("Prefabs/Materials/Textures/GreenTank") as Texture;
 							GameGUI.Player2 = tankObject;
 						}
 						break;

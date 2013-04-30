@@ -70,14 +70,14 @@ public class TTank : MonoBehaviour {
 			if (bulletlvl>3f) bulletlvl=3f;
 		break;
 		case TPowerUp.PowerUpType.Shield:
-			shield=5f;
+			shield=12f;
 			Shield.particleSystem.Play();
 		break;
 		case TPowerUp.PowerUpType.TankLife:
 			life++;
 		break;
 		case TPowerUp.PowerUpType.TankSpeedUp:
-			speedMod=5f;
+			speedMod=12f;
 		break;
 		case TPowerUp.PowerUpType.Bomb:
 			foreach(GameObject enemy in	GameObject.FindGameObjectsWithTag("Enemy")){
