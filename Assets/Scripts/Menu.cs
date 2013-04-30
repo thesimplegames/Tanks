@@ -1,5 +1,8 @@
 using UnityEngine;
+using System;
 using System.Collections;
+
+
 public class Menu : MonoBehaviour {
 	
 	public GUIStyle TextStyle; 
@@ -68,6 +71,37 @@ public class Menu : MonoBehaviour {
 	public int MaxFlagLife = 9;
 	
 	public static string mapsDir=System.IO.Directory.GetCurrentDirectory()+"\\Maps\\Company";
+	
+	
+	KeyCode KeyCodeParse(string target){
+		return (KeyCode) System.Enum.Parse(typeof(KeyCode),target);
+	}
+	
+	void Start(){
+		Saver.Begin(System.IO.Directory.GetCurrentDirectory()+"\\Params.conf");
+		PlayerLife=int.Parse(Saver.Load("PlayerLife",PlayerLife.ToString()));
+		EnemyLife=int.Parse(Saver.Load("EnemyLife",EnemyLife.ToString()));
+		FlagLife=int.Parse(Saver.Load("FlagLife",FlagLife.ToString()));
+		MapPrefs.isPause=false;
+		
+		Player1Up=KeyCodeParse(Saver.Load("Player1Up",Player1Up.ToString()));
+		Player1Down=KeyCodeParse(Saver.Load("Player1Down",Player1Down.ToString()));
+		Player1Left=KeyCodeParse(Saver.Load("Player1Left",Player1Left.ToString()));
+		Player1Right=KeyCodeParse(Saver.Load("Player1Right",Player1Right.ToString()));
+		Player1Shoot=KeyCodeParse(Saver.Load("Player1Shoot",Player1Shoot.ToString()));
+		
+		Player2Up=KeyCodeParse(Saver.Load("Player2Up",Player2Up.ToString()));
+		Player2Down=KeyCodeParse(Saver.Load("Player2Down",Player2Down.ToString()));
+		Player2Left=KeyCodeParse(Saver.Load("Player2Left",Player2Left.ToString()));
+		Player2Right=KeyCodeParse(Saver.Load("Player2Right",Player2Right.ToString()));
+		Player2Shoot=KeyCodeParse(Saver.Load("Player2Shoot",Player2Shoot.ToString()));
+	
+		Menu.currentMap=1;
+		GameOver.IsFlagOver=false;
+		GameOver.IsGameOver=false;
+		GameOver.Score=0;
+		GameOver.win=false;
+	}
 	
 	void NullConttrolsChange() {
 		
@@ -163,8 +197,11 @@ public class Menu : MonoBehaviour {
 			if(GUI.Button(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/16*12,Screen.width/8, Screen.height/10), "1 Player", ButtonStyle)) StartGame(mapsDir+"\\"+currentMap+".map", false);
 			if(GUI.Button(new Rect(Screen.width/20*19-Screen.width/8, Screen.height/16*14,Screen.width/8, Screen.height/10), "2 Players", ButtonStyle)) StartGame(mapsDir+"\\"+currentMap+".map", true);
 			
-			if(GUI.Button(new Rect(Screen.width/20, Screen.height/16*14,Screen.width/8, Screen.height/10), "Back", ButtonStyle)) levelSelect = MapPrefs.isBackGround = false;
-		}
+			if(GUI.Button(new Rect(Screen.width/20, Screen.height/16*14,Screen.width/8, Screen.height/10), "Back", ButtonStyle)){
+				levelSelect = MapPrefs.isBackGround = false;
+				Application.LoadLevelAsync("MenuScene");
+			}
+		}	
 		
 		if ((!MySettings)&&(!About)&&(!StGame)&&(!levelSelect)) {
 			
@@ -194,23 +231,40 @@ public class Menu : MonoBehaviour {
 			GUI.Box(new Rect(Screen.width/16*5, Screen.height/16*11, Screen.width/8, Screen.height/16), "Flag Lifes", TextNearFieldStyle);
 			GUI.Box(new Rect(Screen.width/32*20, Screen.height/16*11, Screen.height/32, Screen.height/32), FlagLife.ToString(), TextNearFieldStyle);
 			
-			if (GUI.Button(new Rect(Screen.width/32*21, Screen.height/16*7, Screen.height/32, Screen.height/32),"+",ButtonStyle)) PlayerLife++;
-			if (GUI.Button(new Rect(Screen.width/32*19, Screen.height/16*7, Screen.height/32, Screen.height/32)," ",ButtonMinus)) PlayerLife--;
+			if (GUI.Button(new Rect(Screen.width/32*21, Screen.height/16*7, Screen.height/32, Screen.height/32),"+",ButtonStyle)){
+				PlayerLife++;
+				if (PlayerLife > MaxPlayerLife) PlayerLife--;
+				Saver.Save("PlayerLife",PlayerLife.ToString());
+				}	
+			if (GUI.Button(new Rect(Screen.width/32*19, Screen.height/16*7, Screen.height/32, Screen.height/32)," ",ButtonMinus)){
+				PlayerLife--;
+				if (PlayerLife < 1) PlayerLife++;
+				Saver.Save("PlayerLife",PlayerLife.ToString());
+				}
+			if (GUI.Button(new Rect(Screen.width/32*21, Screen.height/16*9, Screen.height/32, Screen.height/32),"+",ButtonStyle)){
+				EnemyLife++;
+				if (EnemyLife > MaxEnemyLife) EnemyLife--;
+				Saver.Save("EnemyLife",EnemyLife.ToString());
+				}
+			if (GUI.Button(new Rect(Screen.width/32*19, Screen.height/16*9, Screen.height/32, Screen.height/32)," ",ButtonMinus)){
+				EnemyLife--;
+				if (EnemyLife < 1) EnemyLife++;
+				Saver.Save("EnemyLife",EnemyLife.ToString());
+				}
+				
+			if (GUI.Button(new Rect(Screen.width/32*21, Screen.height/16*11, Screen.height/32, Screen.height/32),"+",ButtonStyle)){
+				FlagLife++;
+				if (FlagLife > MaxFlagLife) FlagLife--;
+				Saver.Save("FlagLife",FlagLife.ToString());
+				}
+			if (GUI.Button(new Rect(Screen.width/32*19, Screen.height/16*11, Screen.height/32, Screen.height/32)," ",ButtonMinus)){
+				FlagLife--;
+				if (FlagLife < 1) FlagLife++;
+				Saver.Save("FlagLife",FlagLife.ToString());
+				}
 			
-			if (GUI.Button(new Rect(Screen.width/32*21, Screen.height/16*9, Screen.height/32, Screen.height/32),"+",ButtonStyle)) EnemyLife++;
-			if (GUI.Button(new Rect(Screen.width/32*19, Screen.height/16*9, Screen.height/32, Screen.height/32)," ",ButtonMinus)) EnemyLife--;
 			
-			if (GUI.Button(new Rect(Screen.width/32*21, Screen.height/16*11, Screen.height/32, Screen.height/32),"+",ButtonStyle)) FlagLife++;
-			if (GUI.Button(new Rect(Screen.width/32*19, Screen.height/16*11, Screen.height/32, Screen.height/32)," ",ButtonMinus)) FlagLife--;
 			
-			if (FlagLife > MaxFlagLife) FlagLife--;
-			if (FlagLife < 1) FlagLife++;
-			
-			if (PlayerLife > MaxPlayerLife) PlayerLife--;
-			if (PlayerLife < 1) PlayerLife++;
-			
-			if (EnemyLife > MaxEnemyLife) EnemyLife--;
-			if (EnemyLife < 1) EnemyLife++;
 			
 			
 			if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*13,Screen.width/5,Screen.height/10),"Back", ButtonStyle)) GameSettings = false;
@@ -218,6 +272,7 @@ public class Menu : MonoBehaviour {
 		
 		if ((MySettings)&&(HandleSettings)) {
 				Ev = Event.current;
+				
 				
 				Player1UpSt = Player1Up.ToString();
 				Player1DownSt = Player1Down.ToString();
@@ -284,7 +339,9 @@ public class Menu : MonoBehaviour {
 				if (GUI.Button (new Rect (Screen.width/16*10, Screen.height/16*9, Screen.width/16*5, Screen.height/16), "", ButtonInputStyle))	 {NullConttrolsChange();Player2LeftInput = true;}
 				if (GUI.Button (new Rect (Screen.width/16*10, Screen.height/16*10, Screen.width/16*5, Screen.height/16), "", ButtonInputStyle))	 {NullConttrolsChange();Player2RightInput = true;}
 				if (GUI.Button (new Rect (Screen.width/16*10, Screen.height/16*11, Screen.width/16*5, Screen.height/16), "", ButtonInputStyle))	 {NullConttrolsChange();Player2ShootInput = true;}
+				
 			
+				
 				if ((Ev.isKey)&&(Player1UpInput)) if (CanChange()){Player1Up = Ev.keyCode; Player1UpInput = false;} else Player1UpInput = false;
 				if ((Ev.isKey)&&(Player1DownInput)) if (CanChange()){Player1Down = Ev.keyCode; Player1DownInput = false;}else Player1DownInput = false;
 				if ((Ev.isKey)&&(Player1LeftInput)) if (CanChange()){Player1Left = Ev.keyCode; Player1LeftInput = false;}else Player1LeftInput = false;
@@ -296,6 +353,22 @@ public class Menu : MonoBehaviour {
 				if ((Ev.isKey)&&(Player2LeftInput)) if (CanChange()){Player2Left = Ev.keyCode; Player2LeftInput = false;}else Player2LeftInput = false;
 				if ((Ev.isKey)&&(Player2RightInput))if (CanChange()) {Player2Right = Ev.keyCode; Player2RightInput = false;}else Player2RightInput = false;
 				if ((Ev.isKey)&&(Player2ShootInput)) if (CanChange()){Player2Shoot = Ev.keyCode; Player2ShootInput = false;}else Player2ShootInput = false;
+			
+				if (Ev.isKey) {
+				
+					Saver.Save ("Player1Up",Player1Up.ToString());
+					Saver.Save ("Player1Down",Player1Down.ToString());
+					Saver.Save ("Player1Left",Player1Left.ToString());
+					Saver.Save ("Player1Right",Player1Right.ToString());
+					Saver.Save ("Player1Shoot",Player1Shoot.ToString());
+				
+					Saver.Save ("Player2Up",Player2Up.ToString());
+					Saver.Save ("Player2Down",Player2Down.ToString());
+					Saver.Save ("Player2Left",Player2Left.ToString());
+					Saver.Save ("Player2Right",Player2Right.ToString());
+					Saver.Save ("Player2Shoot",Player2Shoot.ToString());
+				}
+			
 			
 				if(GUI.Button(new Rect(Screen.width/10*4,Screen.height/16*13,Screen.width/5,Screen.height/10),"Back", ButtonStyle)) HandleSettings = false;
 		}
@@ -315,8 +388,4 @@ public class Menu : MonoBehaviour {
 			
 	}	
 	
-	void Start () {
-		MapPrefs.isPause=false;
-		Saver.Begin(System.IO.Directory.GetCurrentDirectory()+"\\Params.conf");
-	}
 }
